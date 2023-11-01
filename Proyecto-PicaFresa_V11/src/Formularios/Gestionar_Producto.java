@@ -23,7 +23,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
     DefaultTableModel modelo;
     Statement st;
     ResultSet rs;
-
+    public static String id = "";
     private static Connection con;
     Metodos_sql metodos = new Metodos_sql();
 
@@ -127,7 +127,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Existencias", "FechaLlegada", "FechaCaducidad", "Precio", "Proveedor", "Categoria"
+                "id", "Nombre", "Existencias", "FechaLlegada", "FechaCaducidad", "Precio", "Proveedor", "Categoria"
             }
         ));
         tablaAlmacen.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -137,7 +137,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tablaAlmacen);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 620, 130));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 640, 130));
         jPanel1.add(txtExistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 320, 70, 30));
         jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 280, 330, 30));
 
@@ -148,7 +148,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, -1, 20));
 
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
-        jLabel6.setText("GESTIONAR PRODUCTO");
+        jLabel6.setText("AGREGAR PRODUCTO");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 510, -1));
         jPanel1.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 410, 330, 30));
 
@@ -345,8 +345,8 @@ public class Gestionar_Producto extends javax.swing.JFrame {
             try {
                 //Sentencia DML para insertar datos
                 String sql = "INSERT INTO Almacen (nombre_producto, Existencias, Fecha_llegada, Fecha_caducidad, Precio,Proveedor,categoria_producto_idCategoria_Producto,venta_id_venta,venta_Usuario_id_Usuario, factura_idFactura ,factura_Proveedor_idProveedor)"
-                        + "VALUES('" + Nombre + "','" + Existencias + "', '" + FechaLL + "', '" + FechaCaducidad + "','" + Precio + "','" + Proveedor + "','" +1+"','"+0+"','"+0+"','"+0+"','"+0+"')";
-                conn = conexion.conectar();                                                                                                 
+                        + "VALUES('" + Nombre + "','" + Existencias + "', '" + FechaLL + "', '" + FechaCaducidad + "','" + Precio + "','" + Proveedor + "','" + 1 + "','" + 1 + "','" + 1 + "','" + 1 + "','" + 1 + "')";
+                conn = conexion.conectar();
                 st = conn.createStatement();
                 st.executeUpdate(sql);
                 showMessageDialog(this, "Nuevo producto registrado");
@@ -416,18 +416,19 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         String sql = "SELECT * FROM  Almacen";
         conn = conexion.conectar();
         System.out.println(sql);
-        String[] datos = new String[7];
+        String[] datos = new String[8];
         try {
             st = conn.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {
-                datos[0] = rs.getString(2);
-                datos[1] = rs.getString(3);
-                datos[2] = rs.getString(4);
-                datos[3] = rs.getString(5);
-                datos[4] = rs.getString(6);
-                datos[5] = rs.getString(7);
-                datos[6] = rs.getString(8);
+                datos[0] = rs.getString(1);
+                datos[1] = rs.getString(2);
+                datos[2] = rs.getString(3);
+                datos[3] = rs.getString(4);
+                datos[4] = rs.getString(5);
+                datos[5] = rs.getString(6);
+                datos[6] = rs.getString(7);
+                datos[7] = rs.getString(8);
 
                 modelo.addRow(datos);
 
@@ -438,30 +439,28 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         }
     }//MostrarDatos
 
+    public void Modificar() {
+        String Nombre = txtNombre.getText();
+        String Exi = txtExistencias.getText();
+        String Precio = txtPrecio.getText();
+        try {
+            if (Nombre.equals("") || Precio.equals("") || cmbProveedor.getSelectedIndex() == 0) {
+                showMessageDialog(this, "Campos Vacios o No Llenados. Verificar");
+                limpiartTxt();
+            } else {
+                String sql = "UPDATE almacen SET Nombre_producto = '" + Nombre + "', Existencias = '" + Exi + "', Precio = '" + Precio + "' WHERE id_producto = '" + id + "'";
 
-    public void Modificar(){
-            String Nombre =txtNombre.getText();       
-            String Exi =txtExistencias.getText();
-            String Precio =txtPrecio.getText();
-            
-            try{                    
-                if(Nombre.equals("") || Precio.equals("") || cmbProveedor.getSelectedIndex()==0) {
-                    showMessageDialog(this, "Campos Vacios o No Llenados. Verificar");
-                    limpiartTxt();
-                } else {
-                    String sql = "UPDATE almacen SET Nombre_producto ='" + Nombre + "', Existencias = '"  + Exi + "', Precio = '" + Precio 
-                            +  "WHERE  Nombre_producto = '" + Nombre + "'";
-                    conn = conexion.conectar();
-                    st = conn.createStatement();
-                    st.executeUpdate(sql);
-                    showMessageDialog(this, "Datos modificados");
-                }
-            }catch(SQLException error){
-                System.out.println("Error en Modificar (SQL)" + error.getMessage());
-            }catch(ArrayIndexOutOfBoundsException error){
-                System.out.println("Error en Modificar (ARRAY)" + error.getMessage());
+                conn = conexion.conectar();
+                st = conn.createStatement();
+                st.executeUpdate(sql);
+                showMessageDialog(this, "Datos modificados");
             }
+        } catch (SQLException error) {
+            System.out.println("Error en Modificar (SQL)" + error.getMessage());
+        } catch (ArrayIndexOutOfBoundsException error) {
+            System.out.println("Error en Modificar (ARRAY)" + error.getMessage());
         }
+    }
 
     public void limpiar() {
         modelo.setRowCount(0);
@@ -475,9 +474,11 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         cmbCategoria.setSelectedIndex(0);
         txtFechaCaducidad.setText("");
     }
-    public void sacaridFact(){
-        
+
+    public void sacaridFact() {
+
     }
+
     public void Eliminar() {
         String Nombre = txtNombre.getText();
 
@@ -541,13 +542,14 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         if (fila == -1) {
             showMessageDialog(this, "No se seleccionó ningna fila");
         } else {
-            String Nombre = (String) tablaAlmacen.getValueAt(fila, 0);
-            String Peso = (String) tablaAlmacen.getValueAt(fila, 1);
-            String FechaLLegadaP = (String) tablaAlmacen.getValueAt(fila, 2);
-            String Unidades = (String) tablaAlmacen.getValueAt(fila, 3);
-            String Precio = (String) tablaAlmacen.getValueAt(fila, 4);
+            id = (String) tablaAlmacen.getValueAt(fila, 0);
+            String Nombre = (String) tablaAlmacen.getValueAt(fila, 1);
+            String Peso = (String) tablaAlmacen.getValueAt(fila, 2);
+            String FechaLLegadaP = (String) tablaAlmacen.getValueAt(fila, 3);
+            String Unidades = (String) tablaAlmacen.getValueAt(fila, 4);
+            String Precio = (String) tablaAlmacen.getValueAt(fila, 5);
             String Proveedor = (String) tablaAlmacen.getValueAt(fila, 6);
-            cmbCategoria.setSelectedItem(tablaAlmacen.getValueAt(tablaAlmacen.getSelectedRow(), 5).toString());
+            cmbCategoria.setSelectedItem(tablaAlmacen.getValueAt(tablaAlmacen.getSelectedRow(), 7).toString());
 
             ren = fila;
             cmbProveedor.setSelectedItem(Proveedor);
@@ -612,9 +614,9 @@ public class Gestionar_Producto extends javax.swing.JFrame {
     }
     private void AgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AgregarMouseClicked
 //        if (cmbCategoria.getSelectedIndex() != 0  && cmbProveedor.getSelectedIndex() != 0) {
-            Insertar();
-            MostrarBD();
-            limpiartTxt();
+        Insertar();
+        MostrarBD();
+        limpiartTxt();
 //        } else {
 //            showMessageDialog(this, "Verifique que todos los elementos sean correctos");
 //        }
@@ -709,31 +711,31 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ChCatActionPerformed
 
-    public void categoria(){
-        String CatNombre =txtCat.getText();         
-        try{               
+    public void categoria() {
+        String CatNombre = txtCat.getText();
+        try {
             String sql = "INSERT INTO Categoria_Producto (nombre_categoria)"
-                        + "VALUES('" + CatNombre +"')";
+                    + "VALUES('" + CatNombre + "')";
             conn = conexion.conectar();
             st = conn.createStatement();
             st.executeUpdate(sql);
             showMessageDialog(this, "Nueva categoria registrada");
-            limpiar();          
-            }catch(Exception error){
-                System.out.println("Error en Insetar datos" + error);
-            }     
+            limpiar();
+        } catch (Exception error) {
+            System.out.println("Error en Insetar datos" + error);
+        }
     }
-    
-    
+
+
     private void BtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddActionPerformed
 
-          String CatNombre =txtCat.getText();       
-            
-            if (CatNombre.isEmpty()) {
-                showMessageDialog(this, "Campo Vacio");
-            }else{
+        String CatNombre = txtCat.getText();
+
+        if (CatNombre.isEmpty()) {
+            showMessageDialog(this, "Campo Vacio");
+        } else {
             categoria();
-            }      
+        }
     }//GEN-LAST:event_BtnAddActionPerformed
 
     private void txtCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCatActionPerformed

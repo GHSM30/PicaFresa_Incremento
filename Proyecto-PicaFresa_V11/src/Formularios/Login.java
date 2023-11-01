@@ -260,6 +260,10 @@ public class Login extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_InicioSesio1MouseClicked
 
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_jLabel4MouseClicked
+
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {

@@ -44,6 +44,7 @@ Connection conn = conexion.conectar();
         txtNewContraseña = new javax.swing.JLabel();
         txtPassword = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,6 +59,13 @@ Connection conn = conexion.conectar();
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1MouseClicked(evt);
+            }
+        });
+
+        jLabel2.setText("Cancelar");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
             }
         });
 
@@ -78,10 +86,12 @@ Connection conn = conexion.conectar();
                         .addComponent(JtxtUsuario))
                     .addComponent(JtxtNewPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(58, 58, 58))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(27, 27, 27)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(97, 97, 97))
+                .addGap(61, 61, 61)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,7 +109,9 @@ Connection conn = conexion.conectar();
                     .addComponent(JtxtNewPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNewContraseña))
                 .addGap(27, 27, 27)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -109,14 +121,25 @@ Connection conn = conexion.conectar();
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
         //Verificacion del usuario existente y si su contraseña es igual a la actual
+        if(JtxtPassword.getText().equals(JtxtNewPassword.getText()) ){
+            JOptionPane.showMessageDialog(null, "No se pudo actualizar, contraseñas repetidas");
+        }else{
         actualizarContraseña();
-        
+        }
     }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        Login v = new Login();
+        v.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel2MouseClicked
     public void actualizarContraseña() {
     String usuario = JtxtUsuario.getText();
     String contraseñaActual = JtxtPassword.getText();
     String nuevaContraseña = JtxtNewPassword.getText();
-
+    
+    
+    
     // Verificar la contraseña actual
     if (verificarContraseña()==true) {
         try {
@@ -214,6 +237,7 @@ public boolean verificarContraseña() {
     private javax.swing.JTextField JtxtPassword;
     private javax.swing.JTextField JtxtUsuario;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel txtNewContraseña;
     private javax.swing.JLabel txtPassword;
     private javax.swing.JLabel txtUsuario;

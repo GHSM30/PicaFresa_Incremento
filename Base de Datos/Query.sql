@@ -1,9 +1,9 @@
 use bd_picafresa;
 -- -------------------------------------------INSERTAR EN USUARIO ------------------------
-INSERT INTO Usuario (Usuario,contraseña,tipo_usuario,Correo) VALUES ('Roberto','1234','Gerente','Roberto@eltrebol.com');
-INSERT INTO Usuario (Usuario,contraseña,tipo_usuario,Correo) VALUES ('Albert','1234','Vendedor','Alberto@eltrebol.com');
-INSERT INTO Usuario (Usuario,contraseña,tipo_usuario,Correo) VALUES ('Oswi','1234','Vendedor','Oswaldo@eltrebol.com');
-INSERT INTO Usuario (Usuario,contraseña,tipo_usuario,Correo) VALUES ('Max','1234','Vendedor','Maximiliano@eltrebol.com');
+INSERT INTO Usuario (Usuario,contraseña,tipo_usuario,RFC_usuario,Nombre_usuario) VALUES ('Roberto','1234','Gerente','MSOFPW3RER','rob');
+INSERT INTO Usuario (Usuario,contraseña,tipo_usuario,RFC_usuario,Nombre_usuario) VALUES ('Albert','1234','Vendedor','MSOFPW3RER','alb');
+INSERT INTO Usuario (Usuario,contraseña,tipo_usuario,RFC_usuario,Nombre_usuario) VALUES ('Oswi','1234','Vendedor','MSOFPW3RER','osw');
+INSERT INTO Usuario (Usuario,contraseña,tipo_usuario,RFC_usuario,Nombre_usuario) VALUES ('Max','1234','Vendedor','MSOFPW3RER','max');
 -- -------------------------------------------INSERTAR EN CATEGORIA ------------------------
 INSERT INTO Categoria_Producto (idCategoria_Producto,Nombre_Categoria) VALUES ('1','Chocolate');
 INSERT INTO Categoria_Producto (idCategoria_Producto,Nombre_Categoria) VALUES ('2','Gomita');
@@ -26,8 +26,8 @@ INSERT INTO Proveedor (id_proveedor,nombre_proveedor,telefono_proveedor,RFC_prov
 INSERT INTO Proveedor (id_proveedor,nombre_proveedor,telefono_proveedor,RFC_proveedor) VALUES ('9','Sofia Martinez','3271123456','LFMA1234ASW');
 INSERT INTO Proveedor (id_proveedor,nombre_proveedor,telefono_proveedor,RFC_proveedor) VALUES ('10','Carlos Ruiz','3211234567','PFM1234YUI');
 -- -------------------------------------------INSERTAR EN ALMACEN ------------------------
-INSERT INTO almacen (nombre_producto,existencias,fecha_llegada,fecha_caducidad,Precio,proveedor,unidad,fk_idCategoria_producto,Proveedor_id_proveedor) values ('PicaFresa','250','31-10-2023','29-02-2024','50','Rosa','9');
-
+/*INSERT INTO almacen (nombre_producto,existencias,fecha_llegada,fecha_caducidad,Precio,proveedor,unidad,fk_idCategoria_producto,Proveedor_id_proveedor) values ('PicaFresa','250','31-10-2023','29-02-2024','50','Rosa','9');
+*/
 
 
 INSERT INTO almacen (nombre_producto,peso_producto,unidad_peso,unidades_paquete,Precio,fk_idCategoria_Producto,Proveedor_id_proveedor) values ('Rockaleta','100','gr','10','65','2','1');

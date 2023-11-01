@@ -17,21 +17,20 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
-
 public class Gestionar_Factura extends javax.swing.JFrame {
-    
+
     int idc;
-    int ren=0;
+    int ren = 0;
     ConexionBD conexion = new ConexionBD();
     Connection conn;
     DefaultTableModel factura;
     Statement st;
     ResultSet rs;
     int id = 0;
-    
+
     private static Connection con;
     Metodos_sql metodos = new Metodos_sql();
-    
+
     public Gestionar_Factura() {
         initComponents();
         this.setLocationRelativeTo(this);
@@ -344,135 +343,152 @@ public class Gestionar_Factura extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-        private void agregarFactura(){
+        private void agregarFactura() {
         String fechaLlegada = txtLlegada.getText();
-        String fechaCaducidad = ((JTextField)jdchCaducidad.getDateEditor().getUiComponent()).getText();
+        String fechaCaducidad = ((JTextField) jdchCaducidad.getDateEditor().getUiComponent()).getText();
         String Estado = cmbEstado.getSelectedItem().toString();
-        
-        if(caducidadValida(fechaLlegada,fechaCaducidad)){            
-            try{
+
+        if (caducidadValida(fechaLlegada, fechaCaducidad)) {
+            try {
                 String sql = "INSERT INTO Factura (Fecha_llegada,Fecha_caducidad,Estado,Proveedor_idProveedor)"
-                        + "VALUES('" + fechaLlegada + "','" + fechaCaducidad + "', '" + Estado +"','"+cmbProveedor.getSelectedItem().toString().substring(0,1)+"')";
+                        + "VALUES('" + fechaLlegada + "','" + fechaCaducidad + "', '" + Estado + "','" + cmbProveedor.getSelectedItem().toString().substring(0, 1) + "')";
                 conn = conexion.conectar();
                 st = conn.createStatement();
                 st.executeUpdate(sql);
                 System.out.println("Factura Registrada");
-            
+
                 showMessageDialog(this, "Factura Registrada");
                 llenarTablaF();
                 cmbProveedor.setSelectedIndex(0);
                 cmbEstado.setSelectedIndex(0);
                 jdchCaducidad.setDate(null);
 
-            }catch(Exception error){
+            } catch (Exception error) {
                 System.out.println("ERROR al registrar Factura\n" + error);
             }
-        }else{
+        } else {
             showMessageDialog(this, "Fecha de caducidad inválida, verifique que la fecha de caducidad no esté vencida");
-        } 
+        }
     }
+
     //-------------------------------------------------------------------------------------------
-    private void modificarFactura(){
-        try{
-            String sql = "UPDATE Factura SET Estado='Completada' WHERE idFactura="+id+"";
+    private void modificarFactura() {
+        try {
+            String sql = "UPDATE Factura SET Estado='Completada' WHERE idFactura=" + id + "";
             conn = conexion.conectar();
             st = conn.createStatement();
             st.executeUpdate(sql);
-            
+
             llenarTablaF();
             limpiarcasillasFactura();
             showMessageDialog(this, "Estado de Factura Modificado");
 
-        }catch(Exception error){
+        } catch (Exception error) {
             System.out.println("ERROR al modificar Factura\n" + error);
         }
     }
-    //-------------------------------------------------------------------------------------------
-    public void llenarTablaF(){
-            factura.setRowCount(0);
-            String sql = "SELECT idFactura,Fecha_llegada,Fecha_caducidad,Estado,Nombre_proveedor FROM FACTURA,PROVEEDOR WHERE id_proveedor=Proveedor_idProveedor";
-            conn = conexion.conectar();
-            System.out.println(sql);
-            String[] datos = new String[5];
-            try {
-                st = conn.createStatement();
-                rs = st.executeQuery(sql);
-                while (rs.next()) {
-                    datos[0] = rs.getString(1);
-                    datos[1] = rs.getString(2);
-                    datos[2] = rs.getString(3);
-                    datos[3] = rs.getString(4);
-                    datos[4] = rs.getString(5);
 
-                    factura.addRow(datos);
-                }
-                tblFacturas.setModel(factura);
-            } catch (SQLException error) {
-                System.out.println("Error en Mostrar Tabla Factura" + error);
-            }
-        }//MostrarDatos
     //-------------------------------------------------------------------------------------------
-    private void fechaSistema(){
+    public void llenarTablaF() {
+        factura.setRowCount(0);
+        String sql = "SELECT idFactura,Fecha_llegada,Fecha_caducidad,Estado,Nombre_proveedor FROM FACTURA,PROVEEDOR WHERE id_proveedor=Proveedor_idProveedor";
+        conn = conexion.conectar();
+        System.out.println(sql);
+        String[] datos = new String[5];
+        try {
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                datos[0] = rs.getString(1);
+                datos[1] = rs.getString(2);
+                datos[2] = rs.getString(3);
+                datos[3] = rs.getString(4);
+                datos[4] = rs.getString(5);
+
+                factura.addRow(datos);
+            }
+            tblFacturas.setModel(factura);
+        } catch (SQLException error) {
+            System.out.println("Error en Mostrar Tabla Factura" + error);
+        }
+    }//MostrarDatos
+    //-------------------------------------------------------------------------------------------
+
+    private void fechaSistema() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String fechaLlegada = (dtf.format(LocalDateTime.now()));
         txtLlegada.setText(fechaLlegada);
     }
+
     //-------------------------------------------------------------------------------------------
-    private boolean caducidadValida(String llegada, String caducidad){
+    private boolean caducidadValida(String llegada, String caducidad) {
         String[] f_llegada = llegada.split("-");
         String[] f_caducidad = caducidad.split("-");
         int[] fechaLlegada = new int[3];
         int[] fechaCaducidad = new int[3];
-        
-        for(int i=0; i<3; i++){
-           fechaLlegada[i] = Integer.parseInt(f_llegada[i]);
-           fechaCaducidad[i] = Integer.parseInt(f_caducidad[i]);
+
+        for (int i = 0; i < 3; i++) {
+            fechaLlegada[i] = Integer.parseInt(f_llegada[i]);
+            fechaCaducidad[i] = Integer.parseInt(f_caducidad[i]);
         }
-        
-        if(fechaCaducidad[2]>fechaLlegada[2]) return true;
-        if(fechaCaducidad[2]==fechaLlegada[2] && (fechaCaducidad[1]>fechaLlegada[1]) || fechaCaducidad[0]>fechaLlegada[0]) return true;
-        if(fechaCaducidad[1]==fechaLlegada[1] && (fechaCaducidad[2]>fechaLlegada[2]) || fechaCaducidad[0]>fechaLlegada[0]) return true;
-        if(fechaCaducidad[0]==fechaLlegada[0] && (fechaCaducidad[1]>fechaLlegada[1]) || fechaCaducidad[2]>fechaLlegada[2]) return true;
-        if(fechaCaducidad[0]>fechaLlegada[0] && (fechaCaducidad[1]>fechaLlegada[1]) && fechaCaducidad[2]>fechaLlegada[2]) return true;
-            
+
+        if (fechaCaducidad[2] > fechaLlegada[2]) {
+            return true;
+        }
+        if (fechaCaducidad[2] == fechaLlegada[2] && (fechaCaducidad[1] > fechaLlegada[1]) || fechaCaducidad[0] > fechaLlegada[0]) {
+            return true;
+        }
+        if (fechaCaducidad[1] == fechaLlegada[1] && (fechaCaducidad[2] > fechaLlegada[2]) || fechaCaducidad[0] > fechaLlegada[0]) {
+            return true;
+        }
+        if (fechaCaducidad[0] == fechaLlegada[0] && (fechaCaducidad[1] > fechaLlegada[1]) || fechaCaducidad[2] > fechaLlegada[2]) {
+            return true;
+        }
+        if (fechaCaducidad[0] > fechaLlegada[0] && (fechaCaducidad[1] > fechaLlegada[1]) && fechaCaducidad[2] > fechaLlegada[2]) {
+            return true;
+        }
+
         return false;
     }
+
     //-------------------------------------------------------------------------------------------
-    private void limpiarcasillasFactura(){
+    private void limpiarcasillasFactura() {
         fechaSistema();
         cmbEstado.setSelectedIndex(0);
         cmbProveedor.setSelectedIndex(0);
-        ((JTextField)jdchCaducidad.getDateEditor().getUiComponent()).setText("");
+        ((JTextField) jdchCaducidad.getDateEditor().getUiComponent()).setText("");
         id = 0;
     }
-    //-------------------------------------------------------------------------------------------
-    private void llenarCmbProveedor(){
-        String sql = "SELECT id_proveedor,Nombre_proveedor FROM PROVEEDOR";
-            conn = conexion.conectar();
-            System.out.println(sql);
-            String[] datos = new String[2];
-            try {
-                st = conn.createStatement();
-                rs = st.executeQuery(sql);
-                while (rs.next()) {
-                    datos[0] = rs.getString(1);
-                    datos[1] = rs.getString(2);
 
-                    cmbProveedor.addItem(datos[0]+" - "+datos[1]);
-                }
-                tblFacturas.setModel(factura);
-            } catch (SQLException error) {
-                System.out.println("Error en Mostrar Tabla Factura" + error);
-            }
-    }
     //-------------------------------------------------------------------------------------------
-    public void filtro(String consulta, JTable Tabla){
+    private void llenarCmbProveedor() {
+        String sql = "SELECT id_proveedor,Nombre_proveedor FROM PROVEEDOR";
+        conn = conexion.conectar();
+        System.out.println(sql);
+        String[] datos = new String[2];
+        try {
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                datos[0] = rs.getString(1);
+                datos[1] = rs.getString(2);
+
+                cmbProveedor.addItem(datos[0] + " - " + datos[1]);
+            }
+            tblFacturas.setModel(factura);
+        } catch (SQLException error) {
+            System.out.println("Error en Mostrar Tabla Factura" + error);
+        }
+    }
+
+    //-------------------------------------------------------------------------------------------
+    public void filtro(String consulta, JTable Tabla) {
         DefaultTableModel modelo = (DefaultTableModel) Tabla.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(modelo);
         Tabla.setRowSorter(tr);
         tr.setRowFilter(RowFilter.regexFilter(consulta));
     }
-    
+
     private void ProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProveedorMouseClicked
         Gestionar_Proveedor v = new Gestionar_Proveedor();
         v.setVisible(true);
@@ -514,34 +530,38 @@ public class Gestionar_Factura extends javax.swing.JFrame {
     }//GEN-LAST:event_AlmacenMouseClicked
 
     private void btnAgregarFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarFMouseClicked
-        if(cmbProveedor.getSelectedIndex()!=0)
-            if(!((JTextField)jdchCaducidad.getDateEditor().getUiComponent()).getText().equals(""))
-                if(cmbEstado.getSelectedIndex()!=0)
+        if (cmbProveedor.getSelectedIndex() != 0)
+            if (!((JTextField) jdchCaducidad.getDateEditor().getUiComponent()).getText().equals("")) {
+                if (cmbEstado.getSelectedIndex() != 0) {
                     agregarFactura();
-                else
-                    showMessageDialog(this, "Estado no seleccionado");                
-            else
+                } else {
+                    showMessageDialog(this, "Estado no seleccionado");
+                }
+            } else {
                 showMessageDialog(this, "Fecha de caducidad no establecida");
+            }
         else
             showMessageDialog(this, "Seleccione a un Proveedor");
     }//GEN-LAST:event_btnAgregarFMouseClicked
 
     private void btnModificarFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarFMouseClicked
-        if(id!=0){
-            if(cmbEstado.getSelectedIndex()==2){
-                int resp = JOptionPane.showConfirmDialog(this,"¿Está seguro de cambiar el estado de la Factura?\n"
-                        + "Una vez cambie el estado a 'Completada' no podrá registrar más productos con esta Factura","",YES_NO_OPTION);
-                if(resp==0) 
+        if (id != 0) {
+            if (cmbEstado.getSelectedIndex() == 2) {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Está seguro de cambiar el estado de la Factura?\n"
+                        + "Una vez cambie el estado a 'Completada' no podrá registrar más productos con esta Factura", "", YES_NO_OPTION);
+                if (resp == 0) {
                     modificarFactura();
-                else 
+                } else {
                     showMessageDialog(this, "Estado de Factura no modificado");
-                
+                }
+
                 limpiarcasillasFactura();
-                jdchCaducidad.setEnabled(true); 
+                jdchCaducidad.setEnabled(true);
+            } else {
+                showMessageDialog(this, "Seleccionar una opción valida para el Estado de la factura");
             }
-            else showMessageDialog(this, "Seleccionar una opción valida para el Estado de la factura");
-        }
-        else showMessageDialog(this, "Selecciona una factura en la tabla para poder editar su Estado");                
+        } else
+            showMessageDialog(this, "Selecciona una factura en la tabla para poder editar su Estado");
     }//GEN-LAST:event_btnModificarFMouseClicked
 
     private void Limpieza1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Limpieza1MouseClicked
@@ -553,11 +573,11 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         String fechaCaducidad = tblFacturas.getValueAt(tblFacturas.getSelectedRow(), 2).toString();
         String Estado = tblFacturas.getValueAt(tblFacturas.getSelectedRow(), 3).toString();
         id = Integer.parseInt(tblFacturas.getValueAt(tblFacturas.getSelectedRow(), 0).toString());
-        
+
         txtLlegada.setText(fechaLlegada);
-        ((JTextField)jdchCaducidad.getDateEditor().getUiComponent()).setText(fechaCaducidad);
+        ((JTextField) jdchCaducidad.getDateEditor().getUiComponent()).setText(fechaCaducidad);
         cmbEstado.setSelectedItem(Estado);
-        
+
         jdchCaducidad.setEnabled(false);
     }//GEN-LAST:event_tblFacturasMouseClicked
 
@@ -585,7 +605,7 @@ public class Gestionar_Factura extends javax.swing.JFrame {
             }
         });
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Almacen;
     private javax.swing.JLabel Corte;

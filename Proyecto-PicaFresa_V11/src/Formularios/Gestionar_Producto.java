@@ -6,35 +6,43 @@ import java.sql.Statement;
 import Clases.ConexionBD;
 import Clases.Metodos_sql;
 import java.sql.Connection;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
-
 public class Gestionar_Producto extends javax.swing.JFrame {
-    
+
     int idc;
-    int ren=0;
+    int ren = 0;
     ConexionBD conexion = new ConexionBD();
     Connection conn;
     DefaultTableModel modelo;
     Statement st;
     ResultSet rs;
-    
+
     private static Connection con;
     Metodos_sql metodos = new Metodos_sql();
-    
+
     public Gestionar_Producto() {
         initComponents();
         this.setLocationRelativeTo(this);
-        modelo = (DefaultTableModel) tablaProducto.getModel();
+        modelo = (DefaultTableModel) tablaAlmacen.getModel();
         MostrarBD();
         llenarCmbProducto();
         IdProveedor();
-        txtCat.setVisible(false); 
-         BtnAdd.setVisible(false);
+        txtCat.setVisible(false);
+        BtnAdd.setVisible(false);
+        fechaSistema();
+    }
+
+    private void fechaSistema() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String fechaLlegada = (dtf.format(LocalDateTime.now()));
+        txtFechaLlegada.setText(fechaLlegada);
     }
 
     @SuppressWarnings("unchecked")
@@ -49,8 +57,8 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         lGJButtonClassicBasic1 = new components.LGJButtonClassicBasic();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tablaProducto = new javax.swing.JTable();
-        txtPeso = new javax.swing.JTextField();
+        tablaAlmacen = new javax.swing.JTable();
+        txtExistencias = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -58,7 +66,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         txtPrecio = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txtUnidades = new javax.swing.JTextField();
+        txtFechaCaducidad = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         Agregar = new javax.swing.JLabel();
         Eliminar = new javax.swing.JLabel();
@@ -80,7 +88,6 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         lblProducto = new javax.swing.JLabel();
         Almacen = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        cmbUnidadMedida = new javax.swing.JComboBox<>();
         cmbCategoria = new javax.swing.JComboBox<>();
         cmbProveedor = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
@@ -88,6 +95,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         txtCat = new javax.swing.JTextField();
         ChCat = new javax.swing.JCheckBox();
         BtnAdd = new javax.swing.JButton();
+        txtFechaLlegada = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -122,29 +130,29 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(65, 153, 182));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tablaProducto.setModel(new javax.swing.table.DefaultTableModel(
+        tablaAlmacen.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nombre", "Peso", "Unidad de Medida", "Unidades por empaque", "Precio", "Categoria", "Proveedor"
+                "Nombre", "Existencias", "FechaLlegada", "FechaCaducidad", "Precio", "Proveedor", "Categoria"
             }
         ));
-        tablaProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+        tablaAlmacen.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaProductoMouseClicked(evt);
+                tablaAlmacenMouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(tablaProducto);
+        jScrollPane3.setViewportView(tablaAlmacen);
 
         jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 620, 130));
-        jPanel1.add(txtPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 320, 70, 30));
+        jPanel1.add(txtExistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 320, 70, 30));
         jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 280, 330, 30));
 
         jLabel3.setText("Nombre");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, 70, 20));
 
-        jLabel4.setText("Peso");
+        jLabel4.setText("Existencias");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, -1, 20));
 
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
@@ -157,9 +165,9 @@ public class Gestionar_Producto extends javax.swing.JFrame {
 
         jLabel8.setText("Categoria");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 460, 110, 20));
-        jPanel1.add(txtUnidades, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 360, 330, 30));
+        jPanel1.add(txtFechaCaducidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 360, 330, 30));
 
-        jLabel9.setText("Unidades Por Paquete");
+        jLabel9.setText("FechaCaducidad");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, -1, 20));
 
         Agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/agregar-usuario.png"))); // NOI18N
@@ -209,7 +217,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 10, 550));
 
-        jLabel5.setText("Unidad de Medida");
+        jLabel5.setText("FechaLlegada");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 320, -1, 20));
 
         jLabel17.setText("Proveedor");
@@ -306,9 +314,6 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         jLabel20.setText("Almacen");
         jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 70, 20));
 
-        cmbUnidadMedida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-SELECCIONAR-", "gr", "kg", "L", "mL" }));
-        jPanel1.add(cmbUnidadMedida, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 320, 120, 30));
-
         cmbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-SELECCIONAR-" }));
         cmbCategoria.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -317,7 +322,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         });
         jPanel1.add(cmbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 460, 330, 30));
 
-        cmbProveedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-SELECCIONAR-" }));
+        cmbProveedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-SELECCIONAR-", "Otro" }));
         cmbProveedor.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbProveedorItemStateChanged(evt);
@@ -336,7 +341,6 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         });
         jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 70, 410, -1));
 
-        txtCat.setOpaque(true);
         txtCat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCatActionPerformed(evt);
@@ -350,7 +354,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
                 ChCatActionPerformed(evt);
             }
         });
-        jPanel1.add(ChCat, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 460, 30, 30));
+        jPanel1.add(ChCat, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 460, 30, 30));
 
         BtnAdd.setText("Nueva");
         BtnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -359,6 +363,10 @@ public class Gestionar_Producto extends javax.swing.JFrame {
             }
         });
         jPanel1.add(BtnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 510, -1, -1));
+
+        txtFechaLlegada.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        txtFechaLlegada.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.add(txtFechaLlegada, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 320, 110, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -373,152 +381,61 @@ public class Gestionar_Producto extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public void Insertar(){
-            String Proveedor = cmbProveedor.getSelectedItem().toString();
-            String Nombre =txtNombre.getText();       
-            String Peso =txtPeso.getText();
-            String Unidad = cmbUnidadMedida.getSelectedItem().toString();
-            String Precio =txtPrecio.getText();
-            String Tipo = cmbCategoria.getSelectedItem().toString();
-            String Unidades =txtUnidades.getText();
-            
-            try{
-                String sql = "INSERT INTO Producto (nombre_producto, peso_producto, unidad_peso, unidades_paquete, Precio,fk_idCategoria_Producto, Proveedor_id_proveedor)"
-                        + "VALUES('" + Nombre + "','" + Peso + "', '" + Unidad + "', '" + Unidades+ "','" + Precio + "','" + Tipo  + "','" + Proveedor +"')";
+    public void Insertar() {
+        String Proveedor = cmbProveedor.getSelectedItem().toString();
+        String Nombre = txtNombre.getText();
+        String Existencias = txtExistencias.getText();
+        String FechaLL = txtFechaLlegada.getText();
+        String Precio = txtPrecio.getText();
+        String Tipo = cmbCategoria.getSelectedItem().toString();
+        String FechaCaducidad = txtFechaCaducidad.getText();
+        //Si el proveedor se selecciona ocmo Otro entonces se insertan los datos en Almacen
+        if (Proveedor.equals("Otro")) {
+            try {
+                //Sentencia DML para insertar datos
+                String sql = "INSERT INTO Almacen (nombre_producto, Existencias, Fecha_llegada, Fecha_caducidad, Precio,Proveedor,categoria_producto_idCategoria_Producto,venta_id_venta,venta_Usuario_id_Usuario,factura_Proveedor_idProveedor)"
+                        + "VALUES('" + Nombre + "','" + Existencias + "', '" + FechaLL + "', '" + FechaCaducidad + "','" + Precio + "','" + Proveedor + "','" +Tipo+"','"+0+"','"+0+"','"+0+"')";
                 conn = conexion.conectar();
                 st = conn.createStatement();
                 st.executeUpdate(sql);
                 showMessageDialog(this, "Nuevo producto registrado");
                 InsertarEnAlmacen();
-                limpiar();                   
-            }catch(Exception error){
+                limpiar();
+            } catch (Exception error) {
                 System.out.println("Error en Insetar datos" + error);
             }
             limpiartTxt();
-        }//Insertar datos
-    
-    public void InsertarEnAlmacen(){
-            String Producto = txtNombre.getText();       
-            String Existencias = "0";
-            String ID = "";
-            try{
-                String sql = "SELECT id_producto FROM PRODUCTO WHERE nombre_producto='"+Producto+"'";
-                st = conn.createStatement();
-                rs = st.executeQuery(sql);
-                while (rs.next()) {
-                    ID = rs.getString(1);
-                    System.out.println(ID);
-                }
-                System.out.println("ID encontrado");
-
-            }catch(Exception error){
-                System.out.println("ID NO encontrado" + error);
-            }
-            try{
-                String sql = "INSERT INTO Almacen (existencias,Producto_id_producto)"
-                        + "VALUES('" + Existencias + "','" + ID + "')";
-                conn = conexion.conectar();
-                st = conn.createStatement();
-                st.executeUpdate(sql);
-                System.out.println("Producto registrado en Almacen");
-
-            }catch(Exception error){
-                System.out.println("ERROR al registrar en Almacén" + error);
-            }
-            limpiartTxt();
-        }//Insertar datos
-    
-    public void MostrarBD() {
-            String sql = "SELECT * FROM  Producto";
-            conn = conexion.conectar();
-            System.out.println(sql);
-            String[] datos = new String[7];
+        } else {
+            //si es distinto de Otro Actualizar la cantidad de Producto mostrado en la tabla y la base de datos
             try {
-                st = conn.createStatement();
-                rs = st.executeQuery(sql);
-                while (rs.next()) {
-                    datos[0] = rs.getString(2);
-                    datos[1] = rs.getString(3);
-                    datos[2] = rs.getString(4);
-                    datos[3] = rs.getString(5);
-                    datos[4] = rs.getString(6);
-                    datos[5] = rs.getString(7);
-                    datos[6] = rs.getString(8);
-
-                    modelo.addRow(datos);
-
-                }
-                tablaProducto.setModel(modelo);
-            } catch (SQLException error) {
-                System.out.println("Error en Mostrar Tabla" + error);
-            }
-        }//MostrarDatos
-    public void Modificar(){
-            String Proveedor = cmbProveedor.getSelectedItem().toString();
-            String Nombre =txtNombre.getText();       
-            String Peso =txtPeso.getText();
-            String Unidad = cmbUnidadMedida.getSelectedItem().toString();
-            String Precio =txtPrecio.getText();
-            String Tipo = cmbCategoria.getSelectedItem().toString();
-            String Unidades =txtUnidades.getText();
-            
-            String ID_Proveedor = "";
-            try {
-                String sql = "SELECT id_producto FROM PROVEEDOR WHERE nombre_proveedor='" + Proveedor + "'";
-                st = conn.createStatement();
-                rs = st.executeQuery(sql);
-                while (rs.next()) {
-                    ID_Proveedor = rs.getString(1);
-                    System.out.println(ID_Proveedor);
-                }
-                System.out.println("ID encontrado");
-
-            } catch (Exception error) {
-                System.out.println("ID NO encontrado" + error);
-            }
-
-            try{                    
-                if(Nombre.equals("") || Unidades.equals("") || Precio.equals("") || Peso.equals("") || cmbCategoria.getSelectedIndex()==0 || 
-                cmbUnidadMedida.getSelectedIndex()==0 || cmbProveedor.getSelectedIndex()==0) {
+                if (Nombre.equals("") || FechaCaducidad.equals("") || Precio.equals("") || Existencias.equals("") || cmbCategoria.getSelectedIndex() == 0
+                        || cmbProveedor.getSelectedIndex() == 0) {
                     showMessageDialog(this, "Campos Vacios o No Llenados. Verificar");
                     limpiartTxt();
                 } else {
-                    String sql = "UPDATE Producto SET peso_producto ='" + Peso + "', unidad_peso = '"  + Unidad+ "', unidades_paquete = '"
-                    + Unidades + "', Precio = '" + Precio + "', fk_idCategoria_Producto = '" + Tipo+ "', Proveedor_id_proveedor = '" + Proveedor
-                        + "' WHERE  nombre_producto = '" + Nombre + "'";
-
-
+                    String sql = "UPDATE Almacen SET Nombre_producto ='" + Nombre + "', Existencias = '" + Existencias + "', Fecha_llegada = '"
+                            + FechaLL + "', Fecha_caducidad = '" + FechaCaducidad + "', Proveedor = '" + Proveedor + "', categoria_producto_idCategoria_Producto = '" + Tipo
+                            + "' WHERE  Nombre_producto = '" + Nombre + "'";
                     conn = conexion.conectar();
                     st = conn.createStatement();
                     st.executeUpdate(sql);
                     showMessageDialog(this, "Datos modificados");
                 }
-            }catch(SQLException error){
+            } catch (SQLException error) {
                 System.out.println("Error en Modificar (SQL)" + error.getMessage());
-            }catch(ArrayIndexOutOfBoundsException error){
+            } catch (ArrayIndexOutOfBoundsException error) {
                 System.out.println("Error en Modificar (ARRAY)" + error.getMessage());
             }
         }
-    public void limpiar() {
-        modelo.setRowCount(0);
-    }
-    
-    private void limpiartTxt(){
-        cmbProveedor.setSelectedIndex(0);
-        txtNombre.setText("");
-        txtPeso.setText("");
-        cmbUnidadMedida.setSelectedIndex(0);
-        txtPrecio.setText("");
-        cmbCategoria.setSelectedIndex(0);
-        txtUnidades.setText("");
-    }
-    
-    public void Eliminar() {
-        String Nombre = txtNombre.getText();
-        
+
+    }//Insertar datos
+
+    public void InsertarEnAlmacen() {
+        String Producto = txtNombre.getText();
+        String Existencias = "0";
         String ID = "";
-        try{
-            String sql = "SELECT id_producto FROM PRODUCTO WHERE nombre_producto='"+Nombre+"'";
+        try {
+            String sql = "SELECT id_producto FROM Almacen WHERE nombre_producto='" + Producto + "'";
             st = conn.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -526,12 +443,130 @@ public class Gestionar_Producto extends javax.swing.JFrame {
                 System.out.println(ID);
             }
             System.out.println("ID encontrado");
-        }catch(Exception error){
+
+        } catch (Exception error) {
+            System.out.println("ID NO encontrado" + error);
+        }
+        try {
+            String sql = "INSERT INTO Almacen (existencias,Producto_id_producto)"
+                    + "VALUES('" + Existencias + "','" + ID + "')";
+            conn = conexion.conectar();
+            st = conn.createStatement();
+            st.executeUpdate(sql);
+            System.out.println("Producto registrado en Almacen");
+
+        } catch (Exception error) {
+            System.out.println("ERROR al registrar en Almacén" + error);
+        }
+        limpiartTxt();
+    }//Insertar datos
+
+    public void MostrarBD() {
+        String sql = "SELECT * FROM  Almacen";
+        conn = conexion.conectar();
+        System.out.println(sql);
+        String[] datos = new String[7];
+        try {
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                datos[0] = rs.getString(2);
+                datos[1] = rs.getString(3);
+                datos[2] = rs.getString(4);
+                datos[3] = rs.getString(5);
+                datos[4] = rs.getString(6);
+                datos[5] = rs.getString(7);
+                datos[6] = rs.getString(8);
+
+                modelo.addRow(datos);
+
+            }
+            tablaAlmacen.setModel(modelo);
+        } catch (SQLException error) {
+            System.out.println("Error en Mostrar Tabla" + error);
+        }
+    }//MostrarDatos
+
+    public void Modificar() {
+        String Proveedor = cmbProveedor.getSelectedItem().toString();
+        String Nombre = txtNombre.getText();
+        String Peso = txtExistencias.getText();
+        String FechaLlegadaProveedor = txtFechaLlegada.getText();
+        String Precio = txtPrecio.getText();
+        String Tipo = cmbCategoria.getSelectedItem().toString();
+        String Unidades = txtFechaCaducidad.getText();
+
+        String ID_Proveedor = "";
+        try {
+            String sql = "SELECT id_producto FROM PROVEEDOR WHERE nombre_proveedor='" + Proveedor + "'";
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                ID_Proveedor = rs.getString(1);
+                System.out.println(ID_Proveedor);
+            }
+            System.out.println("ID encontrado");
+
+        } catch (Exception error) {
+            System.out.println("ID NO encontrado" + error);
+        }
+
+        try {
+            if (Nombre.equals("") || Unidades.equals("") || Precio.equals("") || Peso.equals("") || cmbCategoria.getSelectedIndex() == 0
+                    || cmbProveedor.getSelectedIndex() == 0) {
+                showMessageDialog(this, "Campos Vacios o No Llenados. Verificar");
+                limpiartTxt();
+            } else {
+                String sql = "UPDATE Producto SET peso_producto ='" + Peso + "', unidad_peso = '" + FechaLlegadaProveedor + "', unidades_paquete = '"
+                        + Unidades + "', Precio = '" + Precio + "', fk_idCategoria_Producto = '" + Tipo + "', Proveedor_id_proveedor = '" + Proveedor
+                        + "' WHERE  nombre_producto = '" + Nombre + "'";
+
+                conn = conexion.conectar();
+                st = conn.createStatement();
+                st.executeUpdate(sql);
+                showMessageDialog(this, "Datos modificados");
+            }
+        } catch (SQLException error) {
+            System.out.println("Error en Modificar (SQL)" + error.getMessage());
+        } catch (ArrayIndexOutOfBoundsException error) {
+            System.out.println("Error en Modificar (ARRAY)" + error.getMessage());
+        }
+    }
+
+    public void limpiar() {
+        modelo.setRowCount(0);
+    }
+
+    private void limpiartTxt() {
+        cmbProveedor.setSelectedIndex(0);
+        txtNombre.setText("");
+        txtExistencias.setText("");
+        txtPrecio.setText("");
+        cmbCategoria.setSelectedIndex(0);
+        txtFechaCaducidad.setText("");
+    }
+    public void sacaridFact(){
+        
+    }
+    public void Eliminar() {
+        String Nombre = txtNombre.getText();
+
+        String ID = "";
+        try {
+            String sql = "SELECT id_producto FROM PRODUCTO WHERE nombre_producto='" + Nombre + "'";
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                ID = rs.getString(1);
+                System.out.println(ID);
+            }
+            System.out.println("ID encontrado");
+        } catch (Exception error) {
             System.out.println("Producto NO encontrado para su eliminación" + error);
         }
-        
-        int fila = tablaProducto.getSelectedRow();
-        
+
+        int fila = tablaAlmacen.getSelectedRow();
+
         try {
             if (fila < 0) {
                 showMessageDialog(this, "Articulo no seleccionado");
@@ -545,7 +580,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
             }
         } catch (Exception error) {
             System.out.println("Error en eliminar" + error);
-        }        
+        }
         try {
             if (fila < 0) {
                 showMessageDialog(this, "Articulo no seleccionado");
@@ -564,93 +599,95 @@ public class Gestionar_Producto extends javax.swing.JFrame {
             System.out.println("Error en eliminar" + error);
         }
     }
-    public void filtro(String consulta, JTable Tabla){
+
+    public void filtro(String consulta, JTable Tabla) {
         DefaultTableModel modelo = (DefaultTableModel) Tabla.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(modelo);
         Tabla.setRowSorter(tr);
         tr.setRowFilter(RowFilter.regexFilter(consulta));
     }
-    private void tablaProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProductoMouseClicked
-         int fila = tablaProducto.getSelectedRow();
+    private void tablaAlmacenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAlmacenMouseClicked
+        int fila = tablaAlmacen.getSelectedRow();
         if (fila == -1) {
             showMessageDialog(this, "No se seleccionó ningna fila");
         } else {
-            String Nombre = (String) tablaProducto.getValueAt(fila, 0);
-            String Peso = (String) tablaProducto.getValueAt(fila, 1);
-            String UniMedida = (String) tablaProducto.getValueAt(fila, 2);
-            String Unidades = (String) tablaProducto.getValueAt(fila, 3);
-            String Precio = (String) tablaProducto.getValueAt(fila, 4);
-            String Proveedor = (String) tablaProducto.getValueAt(fila, 6);
-            cmbCategoria.setSelectedItem(tablaProducto.getValueAt(tablaProducto.getSelectedRow(), 5).toString());
-            
+            String Nombre = (String) tablaAlmacen.getValueAt(fila, 0);
+            String Peso = (String) tablaAlmacen.getValueAt(fila, 1);
+            String FechaLLegadaP = (String) tablaAlmacen.getValueAt(fila, 2);
+            String Unidades = (String) tablaAlmacen.getValueAt(fila, 3);
+            String Precio = (String) tablaAlmacen.getValueAt(fila, 4);
+            String Proveedor = (String) tablaAlmacen.getValueAt(fila, 6);
+            cmbCategoria.setSelectedItem(tablaAlmacen.getValueAt(tablaAlmacen.getSelectedRow(), 5).toString());
+
             ren = fila;
             cmbProveedor.setSelectedItem(Proveedor);
             txtNombre.setText("" + Nombre);
-            txtPeso.setText("" + Peso);
-            cmbUnidadMedida.setSelectedItem(UniMedida);
-            txtUnidades.setText("" + Unidades);
-            txtPrecio.setText("" + Precio); 
+            txtExistencias.setText("" + Peso);
+            txtFechaLlegada.setText(FechaLLegadaP);
+            txtFechaCaducidad.setText("" + Unidades);
+            txtPrecio.setText("" + Precio);
 
         }
-    }//GEN-LAST:event_tablaProductoMouseClicked
-    private void llenarCmbProducto(){
+    }//GEN-LAST:event_tablaAlmacenMouseClicked
+    private void llenarCmbProducto() {
         cmbCategoria.removeAllItems();
         cmbCategoria.addItem("-SELECCIONAR-");
         String sql = "SELECT idcategoria_Producto,Nombre_categoria FROM Categoria_Producto";
-            conn = conexion.conectar();
-            System.out.println(sql);
-            String[] datos = new String[2];
-            try {
-                st = conn.createStatement();
-                rs = st.executeQuery(sql);
-                while (rs.next()) {
-                    datos[0] = rs.getString(1);
-                    datos[1] = rs.getString(2);
+        conn = conexion.conectar();
+        System.out.println(sql);
+        String[] datos = new String[2];
+        try {
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                datos[0] = rs.getString(1);
+                datos[1] = rs.getString(2);
 
-                    cmbCategoria.addItem(datos[0]+" - "+datos[1]);
-                }
-            } catch (SQLException error) {
-                System.out.println("Error en Mostrar Tabla Factura" + error);
+                cmbCategoria.addItem(datos[0] + " - " + datos[1]);
             }
+        } catch (SQLException error) {
+            System.out.println("Error en Mostrar Tabla Factura" + error);
+        }
     }
-    public void Buscar(){
+
+    public void Buscar() {
         String nombre = txtNombre.getText();
 
-        try{
-            if(nombre.equals("")) {
+        try {
+            if (nombre.equals("")) {
                 showMessageDialog(this, "Campo nombre vacio");
                 limpiartTxt();
             } else {
-                String sql = "SELECT * FROM Producto WHERE  nombre_producto = '" + nombre +"'";
+                String sql = "SELECT * FROM Almacen WHERE  Nombre_producto = '" + nombre + "'";
                 conn = conexion.conectar();
                 st = conn.createStatement();
                 rs = st.executeQuery(sql);
-                
+
                 while (rs.next()) {
-                    txtPeso.setText(rs.getString(3));
-                    cmbUnidadMedida.setSelectedItem(rs.getString(4));
-                    txtUnidades.setText(rs.getString(5));
+                    txtExistencias.setText(rs.getString(3));
+                    txtFechaLlegada.setText(rs.getString(4));
+                    txtFechaCaducidad.setText(rs.getString(5));
                     txtPrecio.setText(rs.getString(6));
                     cmbCategoria.setSelectedItem(rs.getString(7));
                     cmbProveedor.setSelectedItem(rs.getString(8));
                 }
-                
-                tablaProducto.setModel(modelo);               
+
+                tablaAlmacen.setModel(modelo);
             }
-        }catch(SQLException error){
+        } catch (SQLException error) {
             System.out.println("Error en Buscar (SQL)" + error.getMessage());
-        }catch(ArrayIndexOutOfBoundsException error){
+        } catch (ArrayIndexOutOfBoundsException error) {
             System.out.println("Error en Buscar (ARRAY)" + error.getMessage());
         }
     }
     private void AgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AgregarMouseClicked
-        if(cmbCategoria.getSelectedIndex()!=0 && cmbUnidadMedida.getSelectedIndex()!=0 && cmbProveedor.getSelectedIndex()!=0){
+//        if (cmbCategoria.getSelectedIndex() != 0  && cmbProveedor.getSelectedIndex() != 0) {
             Insertar();
             MostrarBD();
             limpiartTxt();
-        }else{
-            showMessageDialog(this, "Verifique que todos los elementos sean correctos");
-        }
+//        } else {
+//            showMessageDialog(this, "Verifique que todos los elementos sean correctos");
+//        }
     }//GEN-LAST:event_AgregarMouseClicked
 
     private void EliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EliminarMouseClicked
@@ -716,75 +753,72 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         v.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_AlmacenMouseClicked
-  
-     private void IdProveedor(){
+
+    private void IdProveedor() {
         String sql = "SELECT * FROM Proveedor WHERE id_proveedor ";  //Consulta sql
         conn = conexion.conectar();
         try {
-                st = conn.createStatement();
-                rs = st.executeQuery(sql);            
-                while (rs.next()) { 
-                String idProveedor = rs.getString(1);   
-                cmbProveedor.addItem(idProveedor);  
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                String idProveedor = rs.getString(1);
+                cmbProveedor.addItem(idProveedor);
             }
             rs.close();
             st.close();
             conn.close();
-        } catch (SQLException ex) { 
+        } catch (SQLException ex) {
             // Manejar cualquier excepción
             ex.printStackTrace();
-            showMessageDialog(null, "Error al cargar los Datos\n" + ex); 
+            showMessageDialog(null, "Error al cargar los Datos\n" + ex);
         }
-     }//IdProveedor
+    }//IdProveedor
     private void cmbProveedorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbProveedorItemStateChanged
-        if(cmbProveedor.getSelectedIndex()!=0){
-           
-           
+        if (cmbProveedor.getSelectedIndex() != 0) {
+
         }
-     
+
     }//GEN-LAST:event_cmbProveedorItemStateChanged
 
-     
+
     private void cmbCategoriaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbCategoriaItemStateChanged
-        if(cmbCategoria.getSelectedIndex()!=0){
-          
-               
+        if (cmbCategoria.getSelectedIndex() != 0) {
+
         }
     }//GEN-LAST:event_cmbCategoriaItemStateChanged
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        filtro(txtBuscar.getText(), tablaProducto);
+        filtro(txtBuscar.getText(), tablaAlmacen);
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void ChCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChCatActionPerformed
         if (ChCat.isSelected()) {
-                    txtCat.setVisible(true); // Mostrar el JTextField si el JCheckBox está seleccionado
-                    BtnAdd.setVisible(true);
-                } else {
-                    txtCat.setVisible(false); 
-                    BtnAdd.setVisible(false);
-                }
+            txtCat.setVisible(true); // Mostrar el JTextField si el JCheckBox está seleccionado
+            BtnAdd.setVisible(true);
+        } else {
+            txtCat.setVisible(false);
+            BtnAdd.setVisible(false);
+        }
     }//GEN-LAST:event_ChCatActionPerformed
 
     private void BtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddActionPerformed
-     
-        
-          String CatNombre =txtCat.getText();       
+
+        String CatNombre = txtCat.getText();
         //  String idCategoria_Producto = idCat.getText(); 
-            
-            try{
-                String sql = "INSERT INTO Categoria_Producto (nombre_categoria)"
-                        + "VALUES('" + CatNombre +"')";
-                conn = conexion.conectar();
-                st = conn.createStatement();
-                st.executeUpdate(sql);
-                showMessageDialog(this, "Nuevo producto registrado");
-                InsertarEnAlmacen();
-                limpiar();                   
-            }catch(Exception error){
-                System.out.println("Error en Insetar datos" + error);
-            }
-            limpiartTxt();
+
+        try {
+            String sql = "INSERT INTO Categoria_Producto (nombre_categoria)"
+                    + "VALUES('" + CatNombre + "')";
+            conn = conexion.conectar();
+            st = conn.createStatement();
+            st.executeUpdate(sql);
+            showMessageDialog(this, "Nuevo producto registrado");
+            InsertarEnAlmacen();
+            limpiar();
+        } catch (Exception error) {
+            System.out.println("Error en Insetar datos" + error);
+        }
+        limpiartTxt();
     }//GEN-LAST:event_BtnAddActionPerformed
 
     private void txtCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCatActionPerformed
@@ -799,7 +833,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
             }
         });
     }
-      private java.sql.Statement declarax;
+    private java.sql.Statement declarax;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Agregar;
     private javax.swing.JLabel Almacen;
@@ -815,7 +849,6 @@ public class Gestionar_Producto extends javax.swing.JFrame {
     private javax.swing.JLabel Ventas;
     private javax.swing.JComboBox<String> cmbCategoria;
     private javax.swing.JComboBox<String> cmbProveedor;
-    private javax.swing.JComboBox<String> cmbUnidadMedida;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -840,13 +873,14 @@ public class Gestionar_Producto extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     private components.LGJButtonClassicBasic lGJButtonClassicBasic1;
     private javax.swing.JLabel lblProducto;
-    private javax.swing.JTable tablaProducto;
+    private javax.swing.JTable tablaAlmacen;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCat;
+    private javax.swing.JTextField txtExistencias;
+    private javax.swing.JTextField txtFechaCaducidad;
+    private javax.swing.JLabel txtFechaLlegada;
     private javax.swing.JTextField txtId2;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPeso;
     private javax.swing.JTextField txtPrecio;
-    private javax.swing.JTextField txtUnidades;
     // End of variables declaration//GEN-END:variables
 }

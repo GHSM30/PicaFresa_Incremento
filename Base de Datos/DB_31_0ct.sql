@@ -42,7 +42,8 @@ CREATE TABLE IF NOT EXISTS `bd_picafresa`.`usuario` (
   `Usuario` VARCHAR(45) NOT NULL,
   `contraseña` VARCHAR(45) NOT NULL,
   `tipo_usuario` VARCHAR(45) NOT NULL,
-  `Correo` VARCHAR(45) NOT NULL,
+  `RFC_usuario` VARCHAR(45) NOT NULL,
+  `Nombre_usuario` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_Usuario`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 10

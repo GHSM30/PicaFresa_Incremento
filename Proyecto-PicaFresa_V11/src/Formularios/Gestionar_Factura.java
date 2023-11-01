@@ -56,18 +56,6 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        Proveedor = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        Devoluciones = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        Corte = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        Ventas = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        Productos = new javax.swing.JLabel();
-        lblProducto = new javax.swing.JLabel();
-        Almacen = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblFacturas = new javax.swing.JTable();
         jLabel16 = new javax.swing.JLabel();
@@ -80,11 +68,13 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         txtLlegada = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         cmbProveedor = new javax.swing.JComboBox<>();
-        jLabel11 = new javax.swing.JLabel();
-        lblFacturas = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
+        Proveedor = new javax.swing.JLabel();
+        Productos = new javax.swing.JLabel();
+        Almacen = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        Proveedor1 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -114,7 +104,7 @@ public class Gestionar_Factura extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(65, 153, 182));
+        jPanel1.setBackground(new java.awt.Color(153, 0, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
@@ -146,90 +136,7 @@ public class Gestionar_Factura extends javax.swing.JFrame {
             .addGap(0, 620, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 10, 620));
-
-        Proveedor.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
-        Proveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/proveedor.png"))); // NOI18N
-        Proveedor.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ProveedorMouseClicked(evt);
-            }
-        });
-        jPanel1.add(Proveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 60, 60));
-
-        jLabel9.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel9.setText("Proveedor");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, 20));
-
-        Devoluciones.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
-        Devoluciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reemplazo.png"))); // NOI18N
-        Devoluciones.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                DevolucionesMouseClicked(evt);
-            }
-        });
-        jPanel1.add(Devoluciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 70, 50));
-
-        jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel6.setText("Devoluciones");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 100, 20));
-
-        Corte.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
-        Corte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/caja-registradora.png"))); // NOI18N
-        Corte.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                CorteMouseClicked(evt);
-            }
-        });
-        Corte.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                CorteKeyPressed(evt);
-            }
-        });
-        jPanel1.add(Corte, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 70, 60));
-
-        jLabel12.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel12.setText("Corte");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 50, 20));
-
-        Ventas.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
-        Ventas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/administracion-del-dinero.png"))); // NOI18N
-        Ventas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                VentasMouseClicked(evt);
-            }
-        });
-        jPanel1.add(Ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 70, 60));
-
-        jLabel13.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel13.setText("Venta");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 50, 20));
-
-        Productos.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
-        Productos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Candy.png"))); // NOI18N
-        Productos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ProductosMouseClicked(evt);
-            }
-        });
-        jPanel1.add(Productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 70, 50));
-
-        lblProducto.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        lblProducto.setText("Producto");
-        jPanel1.add(lblProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 60, 20));
-
-        Almacen.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
-        Almacen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/almacen.png"))); // NOI18N
-        Almacen.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AlmacenMouseClicked(evt);
-            }
-        });
-        jPanel1.add(Almacen, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 70, 50));
-
-        jLabel10.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel10.setText("Facturas");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, 70, 20));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 10, 620));
 
         tblFacturas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -263,29 +170,29 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-SELECCIONAR-", "Pendiente", "Completada" }));
         jPanel1.add(cmbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 510, 270, -1));
 
-        btnAgregarF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/agregar-usuario.png"))); // NOI18N
+        btnAgregarF.setText("Agregar");
         btnAgregarF.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAgregarFMouseClicked(evt);
             }
         });
-        jPanel1.add(btnAgregarF, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 560, 40, 40));
+        jPanel1.add(btnAgregarF, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 560, 60, 40));
 
-        btnModificarF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/editar.png"))); // NOI18N
+        btnModificarF.setText("Modificar");
         btnModificarF.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnModificarFMouseClicked(evt);
             }
         });
-        jPanel1.add(btnModificarF, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 560, 40, 40));
+        jPanel1.add(btnModificarF, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 560, 70, 40));
 
-        Limpieza1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/limpieza.png"))); // NOI18N
+        Limpieza1.setText("Limpiar casillas");
         Limpieza1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Limpieza1MouseClicked(evt);
             }
         });
-        jPanel1.add(Limpieza1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 560, 40, 40));
+        jPanel1.add(Limpieza1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 560, 90, 40));
         jPanel1.add(txtLlegada, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 410, 270, -1));
 
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
@@ -294,26 +201,6 @@ public class Gestionar_Factura extends javax.swing.JFrame {
 
         cmbProveedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-SELECCIONAR-" }));
         jPanel1.add(cmbProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 360, 270, -1));
-
-        jLabel11.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel11.setText("Almacen");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, 70, 20));
-
-        lblFacturas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Factura.png"))); // NOI18N
-        lblFacturas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblFacturasMouseClicked(evt);
-            }
-        });
-        jPanel1.add(lblFacturas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 540, 60, 50));
-
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/devolver.png"))); // NOI18N
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 10, 70, 60));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -327,6 +214,51 @@ public class Gestionar_Factura extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, 410, -1));
+
+        Proveedor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Proveedor.setText("Proveedor");
+        Proveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ProveedorMouseClicked(evt);
+            }
+        });
+        jPanel1.add(Proveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 90, 60));
+
+        Productos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Productos.setText("Producto");
+        Productos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ProductosMouseClicked(evt);
+            }
+        });
+        jPanel1.add(Productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 70, 50));
+
+        Almacen.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Almacen.setText("Almacen");
+        Almacen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AlmacenMouseClicked(evt);
+            }
+        });
+        jPanel1.add(Almacen, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 80, 60));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setText("Regresar");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 10, 80, 50));
+
+        Proveedor1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Proveedor1.setText("Gestionar Usuario");
+        Proveedor1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Proveedor1MouseClicked(evt);
+            }
+        });
+        jPanel1.add(Proveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 120, 60));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -489,46 +421,6 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         tr.setRowFilter(RowFilter.regexFilter(consulta));
     }
 
-    private void ProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProveedorMouseClicked
-        Gestionar_Proveedor v = new Gestionar_Proveedor();
-        v.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_ProveedorMouseClicked
-
-    private void DevolucionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DevolucionesMouseClicked
-        Gestionar_Devoluciones v = new Gestionar_Devoluciones();
-        v.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_DevolucionesMouseClicked
-
-    private void CorteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CorteMouseClicked
-        Gestionar_Corte v = new Gestionar_Corte();
-        v.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_CorteMouseClicked
-
-    private void CorteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CorteKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CorteKeyPressed
-
-    private void VentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VentasMouseClicked
-        Gestionar_Venta v = new Gestionar_Venta();
-        v.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_VentasMouseClicked
-
-    private void ProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProductosMouseClicked
-        Gestionar_Producto v = new Gestionar_Producto();
-        v.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_ProductosMouseClicked
-
-    private void AlmacenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AlmacenMouseClicked
-        Gestionar_Almacen v = new Gestionar_Almacen();
-        v.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_AlmacenMouseClicked
-
     private void btnAgregarFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarFMouseClicked
         if (cmbProveedor.getSelectedIndex() != 0)
             if (!((JTextField) jdchCaducidad.getDateEditor().getUiComponent()).getText().equals("")) {
@@ -581,21 +473,39 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         jdchCaducidad.setEnabled(false);
     }//GEN-LAST:event_tblFacturasMouseClicked
 
-    private void lblFacturasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFacturasMouseClicked
-        Gestionar_Factura v = new Gestionar_Factura();
-        v.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_lblFacturasMouseClicked
-
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-        Principal v = new Principal();
-        v.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabel8MouseClicked
-
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         filtro(txtBuscar.getText(), tblFacturas);
     }//GEN-LAST:event_txtBuscarKeyReleased
+
+    private void ProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProveedorMouseClicked
+        Gestionar_Proveedor v = new Gestionar_Proveedor();
+        v.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ProveedorMouseClicked
+
+    private void ProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProductosMouseClicked
+        Gestionar_Producto v = new Gestionar_Producto();
+        v.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ProductosMouseClicked
+
+    private void AlmacenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AlmacenMouseClicked
+        Gestionar_Almacen v = new Gestionar_Almacen();
+        v.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_AlmacenMouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        Principal v = new Principal();
+        v.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void Proveedor1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Proveedor1MouseClicked
+        Gestionar_Usuario v = new Gestionar_Usuario();
+        v.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_Proveedor1MouseClicked
 
     public static void main(String args[]) {
 
@@ -608,30 +518,22 @@ public class Gestionar_Factura extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Almacen;
-    private javax.swing.JLabel Corte;
-    private javax.swing.JLabel Devoluciones;
     private javax.swing.JLabel Limpieza1;
     private javax.swing.JLabel Productos;
     private javax.swing.JLabel Proveedor;
-    private javax.swing.JLabel Ventas;
+    private javax.swing.JLabel Proveedor1;
     private javax.swing.JLabel btnAgregarF;
     private javax.swing.JLabel btnModificarF;
     private javax.swing.JComboBox<String> cmbEstado;
     private javax.swing.JComboBox<String> cmbProveedor;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -640,9 +542,7 @@ public class Gestionar_Factura extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private com.toedter.calendar.JDateChooser jdchCaducidad;
-    private javax.swing.JLabel lblFacturas;
     public javax.swing.JLabel lblNombre;
-    private javax.swing.JLabel lblProducto;
     private javax.swing.JTable tblFacturas;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtId2;

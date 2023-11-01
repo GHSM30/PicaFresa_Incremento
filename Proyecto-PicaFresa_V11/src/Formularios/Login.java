@@ -36,7 +36,7 @@ public class Login extends javax.swing.JFrame {
         llenarCmbUsuario();
     }
     private void llenarCmbUsuario(){
-            String sql = "SELECT id_Usuario, Usuario FROM Usuario";
+            String sql = "SELECT id_Usuario,Usuario FROM Usuario";
                 conn = conexion.conectar();
                 System.out.println(sql);
                 String[] datos = new String[2];
@@ -68,6 +68,7 @@ public class Login extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         lGJLabelIcon1 = new components.LGJLabelIcon();
         cmbUsuario = new javax.swing.JComboBox<>();
+        InicioSesio1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -91,7 +92,7 @@ public class Login extends javax.swing.JFrame {
                 InicioSesioMouseClicked(evt);
             }
         });
-        jPanel1.add(InicioSesio, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, -1, -1));
+        jPanel1.add(InicioSesio, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 320, -1, -1));
 
         txtContra.setFont(new java.awt.Font("Century", 1, 14)); // NOI18N
         txtContra.setForeground(new java.awt.Color(204, 204, 204));
@@ -163,28 +164,83 @@ public class Login extends javax.swing.JFrame {
         });
         jPanel1.add(cmbUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 227, 210, 30));
 
+        InicioSesio1.setText("Restablecer contraseña");
+        InicioSesio1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                InicioSesio1MouseClicked(evt);
+            }
+        });
+        jPanel1.add(InicioSesio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 350, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, 610, 460));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     public void IniciarSesion2(){
-        String ID = "";
         conn = null;
         rs = null;
         stmt = null;
-        //String user = txtUser.getText();
+           
         String pass = txtContra.getText();
-        String[] idUsuario = cmbUsuario.getSelectedItem().toString().split(" ");   
-        
-        if (cmbUsuario.getSelectedIndex()==0 || pass.equals("")) {
+        String usuarioSeleccionado = cmbUsuario.getSelectedItem().toString().split(" ")[0];
+    
+        if (cmbUsuario.getSelectedIndex()==0 || pass.equals("") ) {
             JOptionPane.showMessageDialog(this, "Un campo está vacio");
         }else{
             try {
+            
+            String sql = "SELECT * FROM Usuario WHERE Id_usuario = ? AND contraseña = ?";
+            
+            conn = conexion.conectar();
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, usuarioSeleccionado);
+            stmt.setString(2, pass);
+            
+            rs = stmt.executeQuery();
+            
+            
+           
+            
+            if (rs.next()) {
+                String ContraAsignada = rs.getString("contraseña");
+               if("123456789".equals(ContraAsignada)){
+                showMessageDialog(this, "Restablece tu contraseña, por favor"); 
+                }else{ 
+                
+                String tipoUsuario = rs.getString("tipo_usuario");
+                showMessageDialog(this, "Sesión iniciada como " + tipoUsuario);
+                
+                // Lógica para abrir la ventana correspondiente según el tipo de usuario
+                if ("Gerente".equals(tipoUsuario)) {
+                    Principal ventana = new Principal();
+                    ventana.lblNombre.setText("Gerente");
+                    ventana.setVisible(true);
+                } else {
+                    Realizar_Venta nueva = new Realizar_Venta();
+                    nueva.lblNombre.setText(usuarioSeleccionado);
+                    nueva.setVisible(true);
+                }
+                
+                this.dispose();
+               }
+            } else {
+                JOptionPane.showMessageDialog(this, "Datos incorrectos");
+            }
+            
+            } catch (SQLException e) {
+            System.err.println(e.toString());
+            JOptionPane.showMessageDialog(this, "Ocurrió un problema en el servidor, espere nuevamente mientras un servidor lo soluciona.");
+        }
+         //String user = txtUser.getText();
+        //String pass = txtContra.getText();
+        //String[] idUsuario = cmbUsuario.getSelectedItem().toString().split(" ");
+                /*
+                String sql = "SELECT FROM Usuario (contraseña) values(?,?,?,?,?)";
+        
                 
                 conn = conexion.conectar();
                 stmt =conn.prepareStatement("SELECT * FROM Usuario WHERE Id_usuario ='" + cmbUsuario.getSelectedItem().toString().substring(0,1) + "' and contraseña = '" + pass + "'");
                 rs = stmt.executeQuery();
-                
                 
                 if(txtContra.getText().equals("123456789")){
                 showMessageDialog(this,"Sesion iniciada como Gerente");
@@ -206,7 +262,7 @@ public class Login extends javax.swing.JFrame {
             } catch (SQLException e) {
                 System.err.println(e.toString());
                 JOptionPane.showMessageDialog(this, "Ocurrio un problema en el servidor, espere nuevamente en lo que un servidor lo arregla");
-            }
+            */
         }
     }
     
@@ -235,6 +291,13 @@ public class Login extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cmbUsuarioItemStateChanged
 
+    private void InicioSesio1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InicioSesio1MouseClicked
+        // TODO add your handling code here:
+        Restablecer_Password v = new Restablecer_Password();
+        v.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_InicioSesio1MouseClicked
+
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -246,6 +309,7 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel InicioSesio;
+    private javax.swing.JLabel InicioSesio1;
     private javax.swing.JCheckBox cbPass;
     private javax.swing.JComboBox<String> cmbUsuario;
     private javax.swing.JLabel jLabel1;

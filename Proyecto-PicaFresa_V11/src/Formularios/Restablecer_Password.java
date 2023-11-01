@@ -53,6 +53,7 @@ Connection conn = conexion.conectar();
 
         txtPassword.setText("Contraseña");
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Actualizar Contraseña");
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

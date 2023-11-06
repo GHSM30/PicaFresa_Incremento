@@ -188,7 +188,7 @@ public class Login extends javax.swing.JFrame {
                     ventana.setVisible(true);
                 } else {
                     Realizar_Venta nueva = new Realizar_Venta();
-                    nueva.lblNombre.setText(usuarioSeleccionado);
+                    nueva.lblNombre.setText("Vendedor");
                     nueva.setVisible(true);
                 }
                 

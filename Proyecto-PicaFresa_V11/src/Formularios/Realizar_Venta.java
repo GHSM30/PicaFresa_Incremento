@@ -141,24 +141,24 @@ public class Realizar_Venta extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(65, 153, 182));
+        jPanel1.setBackground(new java.awt.Color(153, 0, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Buscar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/buscar.png"))); // NOI18N
+        Buscar2.setText("Buscar");
         Buscar2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Buscar2MouseClicked(evt);
             }
         });
-        jPanel1.add(Buscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 90, 40, 40));
+        jPanel1.add(Buscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 90, 60, 40));
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/devolver.png"))); // NOI18N
+        jLabel8.setText("Regresar");
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel8MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 70, 70, 60));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 90, 70, 40));
 
         tblRegistroVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -175,7 +175,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(tblRegistroVenta);
 
-        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 340, -1));
+        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 340, 350));
 
         jLabel18.setText("Producto");
         jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
@@ -264,7 +264,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
                 btnPagarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 510, -1, -1));
+        jPanel1.add(btnPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 490, -1, -1));
 
         btnAñadir.setText("Añadir");
         btnAñadir.addActionListener(new java.awt.event.ActionListener() {
@@ -272,11 +272,11 @@ public class Realizar_Venta extends javax.swing.JFrame {
                 btnAñadirActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAñadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, -1, -1));
+        jPanel1.add(btnAñadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, -1, -1));
 
-        jLabel11.setFont(new java.awt.Font("Mshtakan", 0, 48)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Arial Black", 0, 48)); // NOI18N
         jLabel11.setText("Realizar venta");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 310, -1));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 390, -1));
 
         txtCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         txtCantidad.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -311,7 +311,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
         });
         jScrollPane6.setViewportView(tblVenta);
 
-        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 130, 340, -1));
+        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 130, 340, 350));
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Inicio de sesion como");
@@ -339,9 +339,10 @@ public class Realizar_Venta extends javax.swing.JFrame {
                 txtBuscar2KeyReleased(evt);
             }
         });
-        jPanel1.add(txtBuscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 100, 190, -1));
+        jPanel1.add(txtBuscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 100, 240, -1));
 
-        Buscar3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/buscar.png"))); // NOI18N
+        Buscar3.setText("Buscar");
+        Buscar3.setToolTipText("");
         Buscar3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Buscar3MouseClicked(evt);
@@ -357,7 +358,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
         });
         jPanel1.add(BtnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 40, 130, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, 1080, 580));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, 1080, 560));
 
         Ventas.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         Ventas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/administracion-del-dinero.png"))); // NOI18N

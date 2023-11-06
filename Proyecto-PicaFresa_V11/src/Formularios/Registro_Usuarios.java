@@ -231,14 +231,15 @@ public class Registro_Usuarios extends javax.swing.JFrame {
     }
 }
     public void registrar2(){
+        String consulta = "SELECT Usuario FROM bd_picafresa.usuario;";
         String sql = "INSERT into Usuario (Usuario,contraseña, tipo_usuario, RFC_usuario, Nombre_usuario) values(?,?,?,?,?)";
         String tipoUsuario = Tipo_Us.getSelectedItem().toString();
+        
         try
         {            
             PreparedStatement pst = conn.prepareStatement(sql);
-        
             pst.setString(1, txtUser.getText());
-            pst.setString(2, txtContra.getText());
+            pst.setString(2, "123456789");
             pst.setString(3, tipoUsuario);
             pst.setString(4, txtRFC.getText());
             pst.setString(5, txtNombre_Usuario.getText());

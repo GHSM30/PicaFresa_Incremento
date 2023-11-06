@@ -50,7 +50,6 @@ String[] datos = new String[5];
         jTable2 = new javax.swing.JTable();
         txtId2 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        txtBuscar = new javax.swing.JTextField();
         lGJPanelGradient1 = new components.LGJPanelGradient();
         lGJPanelGradientBassic3 = new components.LGJPanelGradientBassic();
         jLabel15 = new javax.swing.JLabel();
@@ -60,6 +59,7 @@ String[] datos = new String[5];
         Agregar = new javax.swing.JLabel();
         Eliminar = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        txtBuscar = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -90,16 +90,8 @@ String[] datos = new String[5];
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(65, 153, 182));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtBuscarKeyReleased(evt);
-            }
-        });
-        jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 540, -1));
 
         lGJPanelGradient1.setBackground(new java.awt.Color(153, 0, 204));
         lGJPanelGradient1.setForeground(new java.awt.Color(153, 0, 204));
@@ -174,48 +166,59 @@ String[] datos = new String[5];
             }
         });
 
+        txtBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout lGJPanelGradient1Layout = new javax.swing.GroupLayout(lGJPanelGradient1);
         lGJPanelGradient1.setLayout(lGJPanelGradient1Layout);
         lGJPanelGradient1Layout.setHorizontalGroup(
             lGJPanelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(lGJPanelGradient1Layout.createSequentialGroup()
-                .addGroup(lGJPanelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(lGJPanelGradient1Layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(jLabel16))
-                    .addGroup(lGJPanelGradient1Layout.createSequentialGroup()
-                        .addGap(221, 221, 221)
-                        .addComponent(Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(68, 68, 68)
-                        .addComponent(Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 164, Short.MAX_VALUE))
+                .addGap(54, 54, 54)
+                .addComponent(jLabel16)
+                .addGap(41, 41, 41)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 238, Short.MAX_VALUE))
             .addGroup(lGJPanelGradient1Layout.createSequentialGroup()
                 .addGroup(lGJPanelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(lGJPanelGradient1Layout.createSequentialGroup()
                         .addGap(182, 182, 182)
                         .addComponent(lGJPanelGradientBassic3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(lGJPanelGradient1Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
+                        .addGap(19, 19, 19)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(lGJPanelGradient1Layout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addComponent(Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(161, 161, 161))
         );
         lGJPanelGradient1Layout.setVerticalGroup(
             lGJPanelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(lGJPanelGradient1Layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addComponent(lGJPanelGradientBassic3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(lGJPanelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addGroup(lGJPanelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(lGJPanelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(lGJPanelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(204, 204, 204))
+                .addGap(229, 229, 229))
         );
 
         jPanel1.add(lGJPanelGradient1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 610));
@@ -265,14 +268,14 @@ String[] datos = new String[5];
         }
         
         int fila = tablaUsuario.getSelectedRow();
-        
+        String valor =  tablaUsuario.getValueAt(fila, 0).toString();
         try {
             if (fila < 0) {
                 showMessageDialog(this, "usuario no seleccionado");
                 
             } else {
                 int idS=Integer.parseInt(ID);
-                String sql = "DELETE FROM Usuario where id_Usuario ="+idS;
+                String sql = "DELETE FROM Usuario where id_Usuario ="+valor;
                 conn = conexion.conectar();
                 st = conn.createStatement();
                 st.executeUpdate(sql);

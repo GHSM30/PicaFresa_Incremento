@@ -150,7 +150,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
                 Buscar2MouseClicked(evt);
             }
         });
-        jPanel1.add(Buscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 90, 60, 40));
+        jPanel1.add(Buscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 90, 60, 40));
 
         jLabel8.setText("Regresar");
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -158,7 +158,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
                 jLabel8MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 90, 70, 40));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 10, 70, 40));
 
         tblRegistroVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -175,7 +175,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(tblRegistroVenta);
 
-        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 340, 350));
+        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 340, 340));
 
         jLabel18.setText("Producto");
         jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
@@ -232,7 +232,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
                 txtBuscarKeyReleased(evt);
             }
         });
-        jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 190, -1));
+        jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 260, -1));
 
         jLabel23.setText("Unidades");
         jPanel1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, -1));
@@ -247,7 +247,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
         jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 190, 20));
 
         jLabel4.setText("Total");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 40, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 490, -1, -1));
 
         txtTotalFinal.setEditable(false);
         txtTotalFinal.setText("0.0");
@@ -256,7 +256,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
                 txtTotalFinalActionPerformed(evt);
             }
         });
-        jPanel1.add(txtTotalFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 40, 190, 20));
+        jPanel1.add(txtTotalFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 490, 190, 20));
 
         btnPagar.setText("Pagar");
         btnPagar.addActionListener(new java.awt.event.ActionListener() {
@@ -276,7 +276,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Arial Black", 0, 48)); // NOI18N
         jLabel11.setText("Realizar venta");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 390, -1));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 390, -1));
 
         txtCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         txtCantidad.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -311,7 +311,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
         });
         jScrollPane6.setViewportView(tblVenta);
 
-        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 130, 340, 350));
+        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 130, 340, 340));
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Inicio de sesion como");
@@ -339,7 +339,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
                 txtBuscar2KeyReleased(evt);
             }
         });
-        jPanel1.add(txtBuscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 100, 240, -1));
+        jPanel1.add(txtBuscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 100, 270, -1));
 
         Buscar3.setText("Buscar");
         Buscar3.setToolTipText("");
@@ -356,7 +356,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
                 BtnSaveActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 40, 130, -1));
+        jPanel1.add(BtnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 490, 130, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, 1080, 560));
 

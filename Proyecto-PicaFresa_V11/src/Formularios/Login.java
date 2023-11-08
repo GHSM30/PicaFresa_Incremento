@@ -29,13 +29,30 @@ public class Login extends javax.swing.JFrame {
     PreparedStatement stmt;
     ResultSet rs;
     
-    public String user ;
-    
     public Login() {
         initComponents();
         cx = new ConexionDB();  
         this.setLocationRelativeTo(this);
         llenarCmbUsuario();
+    }
+    private static int idUsuario;
+    private static String usuario;
+
+    public static int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public static void setIdUsuario(int idUsuario) {
+        Login.idUsuario = idUsuario;
+    }
+    
+    
+    public static String getUsuario() {
+        return usuario;
+    }
+
+    public static void setUsuario(String usuario) {
+        Login.usuario = usuario;
     }
     private void llenarCmbUsuario(){
             String sql = "SELECT id_Usuario,Usuario FROM Usuario";
@@ -170,10 +187,7 @@ public class Login extends javax.swing.JFrame {
             stmt.setString(2, pass);
             
             rs = stmt.executeQuery();
-            
-            
-           
-            
+                
             if (rs.next()) {
                 String ContraAsignada = rs.getString("contraseña");
                if("123456789".equals(ContraAsignada)){
@@ -185,12 +199,24 @@ public class Login extends javax.swing.JFrame {
                 
                 // Lógica para abrir la ventana correspondiente según el tipo de usuario
                 if ("Gerente".equals(tipoUsuario)) {
+                   String usaurio = rs.getString("Usuario");
+                   idUsuario = rs.getInt("id_Usuario");
+                    usuario = rs.getString("Usuario");
+                    Login.setIdUsuario(idUsuario);
+                    Login.setUsuario(usuario);
+                    
                     Principal ventana = new Principal();
                     ventana.lblNombre.setText("Gerente");
                     ventana.setVisible(true);
-                    
                 } else {
-                    Principal_Vendedor nueva = new Principal_Vendedor();
+                    String usaurio = rs.getString("Usuario");
+                    idUsuario = rs.getInt("id_Usuario");
+                    usuario = rs.getString("Usuario");
+ 
+                    Login.setIdUsuario(idUsuario);
+                    Login.setUsuario(usuario);
+                    
+                    Principal_V nueva = new Principal_V();
                     nueva.lblNombre.setText("Vendedor");
                     nueva.setVisible(true);
                 }
@@ -205,38 +231,6 @@ public class Login extends javax.swing.JFrame {
             System.err.println(e.toString());
             JOptionPane.showMessageDialog(this, "Ocurrió un problema en el servidor, espere nuevamente mientras un servidor lo soluciona.");
         }
-         //String user = txtUser.getText();
-        //String pass = txtContra.getText();
-        //String[] idUsuario = cmbUsuario.getSelectedItem().toString().split(" ");
-                /*
-                String sql = "SELECT FROM Usuario (contraseña) values(?,?,?,?,?)";
-        
-                
-                conn = conexion.conectar();
-                stmt =conn.prepareStatement("SELECT * FROM Usuario WHERE Id_usuario ='" + cmbUsuario.getSelectedItem().toString().substring(0,1) + "' and contraseña = '" + pass + "'");
-                rs = stmt.executeQuery();
-                
-                if(txtContra.getText().equals("123456789")){
-                showMessageDialog(this,"Sesion iniciada como Gerente");
-                Principal ventana = new Principal();
-                ventana.lblNombre.setText("Gerente");          
-                ventana.setVisible(true);
-                this.dispose();
-                }
-                else if (rs.next()) {
-                    Realizar_Venta nueva = new Realizar_Venta();
-                    Principal v = new Principal(); 
-                    nueva.lblNombre.setText(cmbUsuario.getSelectedItem().toString().substring(0,1));
-                    nueva.setVisible(true);
-                    //this.dispose();
-                    
-                }else{
-                    JOptionPane.showMessageDialog(this, "Datos incorrectos");
-                }
-            } catch (SQLException e) {
-                System.err.println(e.toString());
-                JOptionPane.showMessageDialog(this, "Ocurrio un problema en el servidor, espere nuevamente en lo que un servidor lo arregla");
-            */
         }
     }
     
@@ -284,8 +278,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
     }
-    
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel InicioSesio;
     private javax.swing.JLabel InicioSesio1;

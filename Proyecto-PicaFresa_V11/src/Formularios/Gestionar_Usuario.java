@@ -315,7 +315,7 @@ String[] datos = new String[5];
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         Principal v = new Principal();
         v.setVisible(true);
-        this.dispose();
+        this.dispose();   
     }//GEN-LAST:event_jLabel2MouseClicked
     
     public void filtro(String consulta, JTable Tabla){

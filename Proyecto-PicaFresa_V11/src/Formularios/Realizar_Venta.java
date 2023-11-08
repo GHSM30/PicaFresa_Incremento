@@ -612,7 +612,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
         Principal v = new Principal();
         v.setVisible(true);
-        this.dispose();
+        this.dispose();   
     }//GEN-LAST:event_jLabel8MouseClicked
 
     private void txtSubtotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSubtotalActionPerformed

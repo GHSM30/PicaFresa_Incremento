@@ -69,7 +69,6 @@ public class Gestionar_Almacen extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         Almacen = new javax.swing.JLabel();
         Productos = new javax.swing.JLabel();
-        Proveedor = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -227,7 +226,7 @@ public class Gestionar_Almacen extends javax.swing.JFrame {
                 AlmacenMouseClicked(evt);
             }
         });
-        jPanel1.add(Almacen, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 80, 60));
+        jPanel1.add(Almacen, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 80, 60));
 
         Productos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         Productos.setText("Producto");
@@ -236,16 +235,7 @@ public class Gestionar_Almacen extends javax.swing.JFrame {
                 ProductosMouseClicked(evt);
             }
         });
-        jPanel1.add(Productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 70, 50));
-
-        Proveedor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        Proveedor.setText("Gestionar Usuario");
-        Proveedor.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ProveedorMouseClicked(evt);
-            }
-        });
-        jPanel1.add(Proveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 120, 60));
+        jPanel1.add(Productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 70, 50));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Regresar");
@@ -499,16 +489,10 @@ public class Gestionar_Almacen extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_ProductosMouseClicked
 
-    private void ProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProveedorMouseClicked
-        Gestionar_Usuario v = new Gestionar_Usuario();
-        v.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_ProveedorMouseClicked
-
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         Principal v = new Principal();
         v.setVisible(true);
-        this.dispose();
+        this.dispose(); 
     }//GEN-LAST:event_jLabel3MouseClicked
 
     public static void main(String args[]) {
@@ -527,7 +511,6 @@ public class Gestionar_Almacen extends javax.swing.JFrame {
     private javax.swing.JLabel Limpieza;
     private javax.swing.JLabel Modificar;
     private javax.swing.JLabel Productos;
-    private javax.swing.JLabel Proveedor;
     private javax.swing.JComboBox<String> cmbFactura;
     private javax.swing.JComboBox<String> cmbProducto;
     private javax.swing.JComboBox<String> cmbProveedor;

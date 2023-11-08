@@ -6,6 +6,7 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         this.setLocationRelativeTo(this);
+        
     }
     
     @SuppressWarnings("unchecked")
@@ -215,7 +216,9 @@ public class Principal extends javax.swing.JFrame {
             }
         });
     }
-
+    
+    public int gerente = 1;
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel TXTID;
     private javax.swing.JButton jButton1;

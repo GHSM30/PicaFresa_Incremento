@@ -29,6 +29,8 @@ public class Login extends javax.swing.JFrame {
     PreparedStatement stmt;
     ResultSet rs;
     
+    public String user ;
+    
     public Login() {
         initComponents();
         cx = new ConexionDB();  
@@ -186,6 +188,7 @@ public class Login extends javax.swing.JFrame {
                     Principal ventana = new Principal();
                     ventana.lblNombre.setText("Gerente");
                     ventana.setVisible(true);
+                    
                 } else {
                     Principal_Vendedor nueva = new Principal_Vendedor();
                     nueva.lblNombre.setText("Vendedor");
@@ -281,7 +284,8 @@ public class Login extends javax.swing.JFrame {
             }
         });
     }
-
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel InicioSesio;
     private javax.swing.JLabel InicioSesio1;

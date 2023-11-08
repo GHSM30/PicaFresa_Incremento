@@ -74,7 +74,6 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         Productos = new javax.swing.JLabel();
         Almacen = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        Proveedor1 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -222,7 +221,7 @@ public class Gestionar_Factura extends javax.swing.JFrame {
                 ProveedorMouseClicked(evt);
             }
         });
-        jPanel1.add(Proveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 90, 60));
+        jPanel1.add(Proveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 90, 60));
 
         Productos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         Productos.setText("Producto");
@@ -231,7 +230,7 @@ public class Gestionar_Factura extends javax.swing.JFrame {
                 ProductosMouseClicked(evt);
             }
         });
-        jPanel1.add(Productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 70, 50));
+        jPanel1.add(Productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 70, 50));
 
         Almacen.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         Almacen.setText("Almacen");
@@ -240,7 +239,7 @@ public class Gestionar_Factura extends javax.swing.JFrame {
                 AlmacenMouseClicked(evt);
             }
         });
-        jPanel1.add(Almacen, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 80, 60));
+        jPanel1.add(Almacen, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 80, 60));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Regresar");
@@ -250,15 +249,6 @@ public class Gestionar_Factura extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 10, 80, 50));
-
-        Proveedor1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        Proveedor1.setText("Gestionar Usuario");
-        Proveedor1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Proveedor1MouseClicked(evt);
-            }
-        });
-        jPanel1.add(Proveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 120, 60));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -498,14 +488,8 @@ public class Gestionar_Factura extends javax.swing.JFrame {
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         Principal v = new Principal();
         v.setVisible(true);
-        this.dispose();
+        this.dispose();   
     }//GEN-LAST:event_jLabel4MouseClicked
-
-    private void Proveedor1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Proveedor1MouseClicked
-        Gestionar_Usuario v = new Gestionar_Usuario();
-        v.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_Proveedor1MouseClicked
 
     public static void main(String args[]) {
 
@@ -521,7 +505,6 @@ public class Gestionar_Factura extends javax.swing.JFrame {
     private javax.swing.JLabel Limpieza1;
     private javax.swing.JLabel Productos;
     private javax.swing.JLabel Proveedor;
-    private javax.swing.JLabel Proveedor1;
     private javax.swing.JLabel btnAgregarF;
     private javax.swing.JLabel btnModificarF;
     private javax.swing.JComboBox<String> cmbEstado;

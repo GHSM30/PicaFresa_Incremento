@@ -6,6 +6,8 @@ public class Principal_Vendedor extends javax.swing.JFrame {
     public Principal_Vendedor() {
         initComponents();
         this.setLocationRelativeTo(this);
+        
+        
     }
     
     @SuppressWarnings("unchecked")
@@ -19,7 +21,6 @@ public class Principal_Vendedor extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         TXTID = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jToggleButton1 = new javax.swing.JToggleButton();
@@ -68,15 +69,7 @@ public class Principal_Vendedor extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, -1, -1));
-
-        jButton2.setText("Agregar Producto");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 230, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
         jLabel3.setBackground(new java.awt.Color(51, 204, 255));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -90,7 +83,7 @@ public class Principal_Vendedor extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 230, -1, -1));
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 230, -1, -1));
 
         jToggleButton1.setText("Factura");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -98,7 +91,7 @@ public class Principal_Vendedor extends javax.swing.JFrame {
                 jToggleButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 300, 100, -1));
+        jPanel1.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 100, -1));
 
         jButton5.setText("Gestionar Venta");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -106,7 +99,7 @@ public class Principal_Vendedor extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 300, -1, -1));
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, -1, -1));
 
         jButton6.setText("Realiza Venta");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -114,7 +107,7 @@ public class Principal_Vendedor extends javax.swing.JFrame {
                 jButton6ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 230, -1, -1));
+        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 230, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, -1));
 
@@ -156,13 +149,6 @@ public class Principal_Vendedor extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        Gestionar_Producto v = new Gestionar_Producto();
-        v.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         Gestionar_Almacen v = new Gestionar_Almacen();
@@ -200,10 +186,10 @@ public class Principal_Vendedor extends javax.swing.JFrame {
         });
     }
 
+    public int vendedor = 0;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel TXTID;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;

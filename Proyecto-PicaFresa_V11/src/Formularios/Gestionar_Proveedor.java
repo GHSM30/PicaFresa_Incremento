@@ -64,7 +64,6 @@ public class Gestionar_Proveedor extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        Proveedor = new javax.swing.JLabel();
         Productos = new javax.swing.JLabel();
         Almacen = new javax.swing.JLabel();
         Almacen1 = new javax.swing.JLabel();
@@ -207,15 +206,6 @@ public class Gestionar_Proveedor extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 10, 80, 50));
 
-        Proveedor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        Proveedor.setText("Gestionar Usuario");
-        Proveedor.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ProveedorMouseClicked(evt);
-            }
-        });
-        jPanel1.add(Proveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 120, 60));
-
         Productos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         Productos.setText("Producto");
         Productos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -223,7 +213,7 @@ public class Gestionar_Proveedor extends javax.swing.JFrame {
                 ProductosMouseClicked(evt);
             }
         });
-        jPanel1.add(Productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 70, 50));
+        jPanel1.add(Productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 70, 50));
 
         Almacen.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         Almacen.setText("Factura");
@@ -232,7 +222,7 @@ public class Gestionar_Proveedor extends javax.swing.JFrame {
                 AlmacenMouseClicked(evt);
             }
         });
-        jPanel1.add(Almacen, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 80, 60));
+        jPanel1.add(Almacen, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 80, 60));
 
         Almacen1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         Almacen1.setText("Almacen");
@@ -241,7 +231,7 @@ public class Gestionar_Proveedor extends javax.swing.JFrame {
                 Almacen1MouseClicked(evt);
             }
         });
-        jPanel1.add(Almacen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 80, 60));
+        jPanel1.add(Almacen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 80, 60));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -439,14 +429,8 @@ public void Eliminar() {
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         Principal v = new Principal();
         v.setVisible(true);
-        this.dispose();
+        this.dispose();   
     }//GEN-LAST:event_jLabel2MouseClicked
-
-    private void ProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProveedorMouseClicked
-        Gestionar_Usuario v = new Gestionar_Usuario();
-        v.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_ProveedorMouseClicked
 
     private void ProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProductosMouseClicked
         Gestionar_Producto v = new Gestionar_Producto();
@@ -482,7 +466,6 @@ public void Eliminar() {
     private javax.swing.JLabel Limpieza;
     private javax.swing.JLabel Modificar;
     private javax.swing.JLabel Productos;
-    private javax.swing.JLabel Proveedor;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

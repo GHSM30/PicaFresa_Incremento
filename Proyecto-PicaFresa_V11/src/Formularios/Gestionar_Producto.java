@@ -87,7 +87,6 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         ChCat = new javax.swing.JCheckBox();
         BtnAdd = new javax.swing.JButton();
         txtFechaLlegada = new javax.swing.JLabel();
-        Proveedor1 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -238,7 +237,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
                 ProveedorMouseClicked(evt);
             }
         });
-        jPanel1.add(Proveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 90, 60));
+        jPanel1.add(Proveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 90, 60));
 
         Productos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         Productos.setText("Producto");
@@ -247,7 +246,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
                 ProductosMouseClicked(evt);
             }
         });
-        jPanel1.add(Productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 70, 50));
+        jPanel1.add(Productos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 70, 50));
 
         Almacen.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         Almacen.setText("Almacen");
@@ -256,7 +255,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
                 AlmacenMouseClicked(evt);
             }
         });
-        jPanel1.add(Almacen, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 80, 60));
+        jPanel1.add(Almacen, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 80, 60));
 
         cmbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-SELECCIONAR-" }));
         cmbCategoria.addItemListener(new java.awt.event.ItemListener() {
@@ -310,15 +309,6 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         txtFechaLlegada.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jPanel1.add(txtFechaLlegada, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 320, 110, 30));
 
-        Proveedor1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        Proveedor1.setText("Gestionar Usuario");
-        Proveedor1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Proveedor1MouseClicked(evt);
-            }
-        });
-        jPanel1.add(Proveedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 120, 60));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -344,7 +334,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         if (Proveedor.equals("Otro")) {
             try {
                 //Sentencia DML para insertar datos
-                String sql = "INSERT INTO Almacen (nombre_producto, Existencias, Fecha_llegada, Fecha_caducidad, Precio,Proveedor,categoria_producto_idCategoria_Producto,venta_id_venta,venta_Usuario_id_Usuario, factura_idFactura ,factura_Proveedor_idProveedor)"
+                String sql = "INSERT INTO Almacen (Nombre_producto, Existencias, Fecha_llegada, Fecha_caducidad, Precio,Proveedor,categoria_producto_idCategoria_Producto,venta_id_venta,venta_Usuario_id_Usuario, factura_idFactura ,factura_Proveedor_idProveedor)"
                         + "VALUES('" + Nombre + "','" + Existencias + "', '" + FechaLL + "', '" + FechaCaducidad + "','" + Precio + "','" + Proveedor + "','" +1+"','"+0+"','"+0+"','"+0+"','"+0+"')";
                 conn = conexion.conectar();                                                                                                 
                 st = conn.createStatement();
@@ -641,7 +631,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         Principal v = new Principal();
         v.setVisible(true);
-        this.dispose();
+        this.dispose();   
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void ProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProveedorMouseClicked
@@ -740,12 +730,6 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCatActionPerformed
 
-    private void Proveedor1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Proveedor1MouseClicked
-        Gestionar_Usuario v = new Gestionar_Usuario();
-        v.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_Proveedor1MouseClicked
-
     private void ModificarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ModificarMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_ModificarMouseEntered
@@ -769,7 +753,6 @@ public class Gestionar_Producto extends javax.swing.JFrame {
     private javax.swing.JLabel Modificar;
     private javax.swing.JLabel Productos;
     private javax.swing.JLabel Proveedor;
-    private javax.swing.JLabel Proveedor1;
     private javax.swing.JComboBox<String> cmbCategoria;
     private javax.swing.JComboBox<String> cmbProveedor;
     private javax.swing.JLabel jLabel10;

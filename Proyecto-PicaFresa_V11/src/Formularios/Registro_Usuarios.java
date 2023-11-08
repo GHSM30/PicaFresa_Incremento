@@ -28,8 +28,6 @@ public class Registro_Usuarios extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        txtContra = new javax.swing.JPasswordField();
         txtRFC = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -50,9 +48,6 @@ public class Registro_Usuarios extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel1.setText("Usuario");
-
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel2.setText("Contraseña");
 
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         jLabel3.setText("Registrar");
@@ -112,17 +107,15 @@ public class Registro_Usuarios extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel5)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel2)
                     .addComponent(jLabel1))
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtRFC, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtContra, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                         .addComponent(txtUser, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                         .addComponent(Tipo_Us, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(txtNombre_Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(82, 215, Short.MAX_VALUE))
+                .addGap(82, 217, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,15 +142,11 @@ public class Registro_Usuarios extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(Tipo_Us, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                .addGap(47, 47, 47)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtRFC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -172,7 +161,7 @@ public class Registro_Usuarios extends javax.swing.JFrame {
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 500));
@@ -207,17 +196,16 @@ public class Registro_Usuarios extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel9MouseClicked
      public void Modificar(){
-    String sql = "UPDATE Usuario SET contraseña=?, tipo_usuario=?, RFC_usuario=?, Nombre_usuario=? WHERE Usuario=?";
+    String sql = "UPDATE Usuario SET tipo_usuario=?, RFC_usuario=?, Nombre_usuario=? WHERE Usuario=?";
     String tipoUsuario = Tipo_Us.getSelectedItem().toString();
     try
     {            
         PreparedStatement pst = conn.prepareStatement(sql);
     
-        pst.setString(1, txtContra.getText());
-        pst.setString(2, tipoUsuario);
-        pst.setString(3, txtRFC.getText());
-        pst.setString(4, txtNombre_Usuario.getText());
-        pst.setString(5, txtUser.getText());
+        pst.setString(1, tipoUsuario);
+        pst.setString(2, txtRFC.getText());
+        pst.setString(3, txtNombre_Usuario.getText());
+        pst.setString(4, txtUser.getText());
 
         int rowsAffected = pst.executeUpdate();
 
@@ -254,7 +242,7 @@ public class Registro_Usuarios extends javax.swing.JFrame {
         }
     }
     public void Registrar(){
-        int i = metodos.guardar(txtRFC.getText(), txtContra.getText());
+        int i = metodos.guardar(txtRFC.getText(), "123456789");
         if(i > 0){
             showMessageDialog(this,"Datos Guardados");
         }else{
@@ -275,7 +263,6 @@ public class Registro_Usuarios extends javax.swing.JFrame {
     private javax.swing.JLabel Registro1;
     private javax.swing.JComboBox<String> Tipo_Us;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -284,7 +271,6 @@ public class Registro_Usuarios extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField txtContra;
     private javax.swing.JTextField txtNombre_Usuario;
     private javax.swing.JTextField txtRFC;
     private javax.swing.JTextField txtUser;

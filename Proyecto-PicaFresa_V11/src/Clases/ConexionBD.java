@@ -5,12 +5,12 @@ import java.sql.DriverManager;
 
 public class ConexionBD {
 
-    public static String url = "jdbc:mysql://localhost:3306/BD_PicaFresa?serverTimezone=America/Mexico_City"; // URL de la base de datos
+    public static String url = "jdbc:mysql://localhost:3307/BD_PicaFresa?serverTimezone=America/Mexico_City"; // URL de la base de datos
     public static String user = "root"; // Usuario de la base de datos
 
 
 
-    public static String password = "123Guillermillo2001"; // Contraseña de la base de datos
+    public static String password = "19400606"; // Contraseña de la base de datos
 
     public static String clase = "com.mysql.cj.jdbc.Driver";
 

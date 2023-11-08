@@ -18,8 +18,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
-import javax.swing.JTable;
-import javax.swing.RowFilter;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -27,6 +27,8 @@ import javax.swing.table.TableRowSorter;
 
 public class Realizar_Venta extends javax.swing.JFrame {
     
+    int idUsuario = Login.getIdUsuario();
+    int ultimoId = 0;
     String ID = "";
     String ID2 = "";
     TableRowSorter<TableModel> trs;
@@ -42,6 +44,8 @@ public class Realizar_Venta extends javax.swing.JFrame {
 
     private static Connection con;
     Metodos_sql metodos = new Metodos_sql();
+    Login v = new Login();
+    
     
     public Realizar_Venta() {
         initComponents();
@@ -51,8 +55,12 @@ public class Realizar_Venta extends javax.swing.JFrame {
         MostrarBD();
         tabla();
         fechaSistema();
-        
+        Login nueva = new Login();
+        //int idUsuario = Login.getIdUsuario();
+        String Usuario = Login.getUsuario();
+        lblNombre.setText(String.valueOf(Usuario));
 
+        
     }
     
     public void ObtenerUltimoRegistro(){
@@ -71,7 +79,6 @@ public class Realizar_Venta extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
         Buscar2 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tblRegistroVenta = new javax.swing.JTable();
         jLabel18 = new javax.swing.JLabel();
@@ -91,7 +98,6 @@ public class Realizar_Venta extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtTotalFinal = new javax.swing.JTextField();
         btnPagar = new javax.swing.JButton();
         btnAñadir = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
@@ -102,11 +108,15 @@ public class Realizar_Venta extends javax.swing.JFrame {
         lblNombre = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         txtLlegada = new javax.swing.JTextField();
-        txtBuscar2 = new javax.swing.JTextField();
-        Buscar3 = new javax.swing.JLabel();
         BtnSave = new javax.swing.JButton();
+        txtTotalFinal = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
         Ventas = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -144,21 +154,13 @@ public class Realizar_Venta extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(153, 0, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Buscar2.setText("Buscar");
+        Buscar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/buscar.png"))); // NOI18N
         Buscar2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Buscar2MouseClicked(evt);
             }
         });
-        jPanel1.add(Buscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 90, 60, 40));
-
-        jLabel8.setText("Regresar");
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 10, 70, 40));
+        jPanel1.add(Buscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 90, 40, 40));
 
         tblRegistroVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -175,7 +177,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(tblRegistroVenta);
 
-        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 340, 340));
+        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 340, -1));
 
         jLabel18.setText("Producto");
         jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
@@ -187,6 +189,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
         jPanel1.add(txtProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 190, 20));
 
         txtPrecio.setEditable(false);
+        txtPrecio.setText("0.0");
         jPanel1.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 190, 20));
 
         jLabel3.setText("Subtotal");
@@ -199,6 +202,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
         jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, -1, -1));
 
         txtSubtotal.setEditable(false);
+        txtSubtotal.setText("0.0");
         txtSubtotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSubtotalActionPerformed(evt);
@@ -206,6 +210,12 @@ public class Realizar_Venta extends javax.swing.JFrame {
         });
         jPanel1.add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, 190, 20));
 
+        txtPago.setText("0.0");
+        txtPago.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtPagoMousePressed(evt);
+            }
+        });
         txtPago.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtPagoKeyPressed(evt);
@@ -217,6 +227,12 @@ public class Realizar_Venta extends javax.swing.JFrame {
         jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, -1, -1));
 
         txtCambio.setEditable(false);
+        txtCambio.setText("0.0");
+        txtCambio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCambioActionPerformed(evt);
+            }
+        });
         jPanel1.add(txtCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 450, 190, 20));
 
         txtBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -232,12 +248,13 @@ public class Realizar_Venta extends javax.swing.JFrame {
                 txtBuscarKeyReleased(evt);
             }
         });
-        jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 260, -1));
+        jPanel1.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 280, -1));
 
         jLabel23.setText("Unidades");
         jPanel1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, -1));
 
         txtUnidades.setEditable(false);
+        txtUnidades.setText("0.0");
         jPanel1.add(txtUnidades, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, 190, 20));
 
         jLabel24.setText("ID");
@@ -247,16 +264,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
         jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 190, 20));
 
         jLabel4.setText("Total");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 490, -1, -1));
-
-        txtTotalFinal.setEditable(false);
-        txtTotalFinal.setText("0.0");
-        txtTotalFinal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTotalFinalActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txtTotalFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 490, 190, 20));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 70, -1, -1));
 
         btnPagar.setText("Pagar");
         btnPagar.addActionListener(new java.awt.event.ActionListener() {
@@ -264,7 +272,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
                 btnPagarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 490, -1, -1));
+        jPanel1.add(btnPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 510, -1, -1));
 
         btnAñadir.setText("Añadir");
         btnAñadir.addActionListener(new java.awt.event.ActionListener() {
@@ -272,11 +280,11 @@ public class Realizar_Venta extends javax.swing.JFrame {
                 btnAñadirActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAñadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, -1, -1));
+        jPanel1.add(btnAñadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, -1, -1));
 
-        jLabel11.setFont(new java.awt.Font("Arial Black", 0, 48)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Mshtakan", 0, 48)); // NOI18N
         jLabel11.setText("Realizar venta");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 390, -1));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 310, -1));
 
         txtCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         txtCantidad.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -289,7 +297,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
                 txtCantidadKeyPressed(evt);
             }
         });
-        jPanel1.add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 370, 190, -1));
+        jPanel1.add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 366, 190, 20));
 
         tblVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -304,14 +312,9 @@ public class Realizar_Venta extends javax.swing.JFrame {
                 tblVentaMouseClicked(evt);
             }
         });
-        tblVenta.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tblVentaKeyReleased(evt);
-            }
-        });
         jScrollPane6.setViewportView(tblVenta);
 
-        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 130, 340, 340));
+        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 130, 340, -1));
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Inicio de sesion como");
@@ -326,39 +329,44 @@ public class Realizar_Venta extends javax.swing.JFrame {
         txtLlegada.setEditable(false);
         jPanel1.add(txtLlegada, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, 190, -1));
 
-        txtBuscar2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBuscar2ActionPerformed(evt);
-            }
-        });
-        txtBuscar2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtBuscar2KeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtBuscar2KeyReleased(evt);
-            }
-        });
-        jPanel1.add(txtBuscar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 100, 270, -1));
-
-        Buscar3.setText("Buscar");
-        Buscar3.setToolTipText("");
-        Buscar3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Buscar3MouseClicked(evt);
-            }
-        });
-        jPanel1.add(Buscar3, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 90, 40, 40));
-
         BtnSave.setText("Realizar Corte");
         BtnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnSaveActionPerformed(evt);
             }
         });
-        jPanel1.add(BtnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 490, 130, -1));
+        jPanel1.add(BtnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 70, 130, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, 1080, 560));
+        txtTotalFinal.setText("0");
+        txtTotalFinal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtTotalFinalMousePressed(evt);
+            }
+        });
+        txtTotalFinal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTotalFinalKeyPressed(evt);
+            }
+        });
+        jPanel1.add(txtTotalFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 70, 170, 20));
+
+        jButton2.setText("-");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 100, -1, -1));
+
+        jLabel9.setText("Regresar");
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 10, 70, 60));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -4, 1080, 580));
 
         Ventas.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         Ventas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/administracion-del-dinero.png"))); // NOI18N
@@ -373,20 +381,39 @@ public class Realizar_Venta extends javax.swing.JFrame {
         jLabel13.setText("Venta");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 50, 20));
 
+        jMenu1.setText("Cerrar Sesion");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Exit");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
     public void pruebas(){  
-        ArrayList<String[]> productosInsertados = new ArrayList<String[]>();
+        ArrayList<String[]> productosInsertados = new ArrayList<String[]>();        
         String nombreUsuario = lblNombre.getText();
         String fechaLlegada = txtLlegada.getText();
         String total =txtTotalFinal.getText();
+        String producto =txtProducto.getText();
         
         try{
             
             // Insertar un nuevo registro en la primera tabla
             String sql = "INSERT INTO Venta (fecha_venta,total_venta,Usuario_id_Usuario)"
-                            + "VALUES('" + fechaLlegada + "','" + total + "', '" + nombreUsuario +"')";            
+                            + "VALUES('" + fechaLlegada + "','" + total + "', '" + idUsuario +"')";            
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.executeUpdate();
                            
@@ -394,7 +421,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
             sql = "SELECT MAX(id_venta) FROM Venta";
             stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
-            int ultimoId = 0;
+            ultimoId = 0;
             if (rs.next()) {
                 ultimoId = rs.getInt(1);
             }
@@ -408,112 +435,35 @@ public class Realizar_Venta extends javax.swing.JFrame {
                 productos[3] = modelo2.getValueAt(i, 3).toString();
                 productos[4] = modelo2.getValueAt(i, 4).toString();
 
-                sql = "INSERT INTO DetalleVenta (venta_id_Venta,producto_id_producto,cantidad_producto,precio_producto,SubTotal)"
-                            + "VALUES('" + ultimoId + "','" + productos[0] + "', '" + productos[3] + "', '" + productos[2] + "', '" + productos[4] +"')";
-                stmt = conn.prepareStatement(sql);
-                /*stmt.setInt(1, ultimoId);
-                stmt.setString(2, productos[0]);
-                stmt.setString(3, productos[1]);
-                stmt.setString(4, productos[2]);
-                productosInsertados.add(productos);*/
-                
-                //showMessageDialog(this,productosInsertados);                
-                stmt.executeUpdate();                
+                sql = "INSERT INTO DetalleVenta (venta_id_Venta,producto_id_producto,nombre_producto,cantidad_producto,precio_producto,SubTotal)"
+                            + "VALUES('" + ultimoId + "','" + productos[0] + "', '" + productos[1] + "', '" + productos[3] + "', '" + productos[2] + "', '" + productos[4] +"')";
+                stmt = conn.prepareStatement(sql);               
+                stmt.executeUpdate(); 
+                              
             }            
             
             // Cerrar la conexión a la base de datos
             conn.close();
 
         }catch(SQLException error){
-            System.out.println("Error en Modificar (SQL)" + error.getMessage());
+            System.out.println("Error en INSERTAR (SQL)" + error.getMessage());
         }catch(ArrayIndexOutOfBoundsException error){
-            System.out.println("Error en Modificar (ARRAY)" + error.getMessage());
+            System.out.println("Error en INSERTAR (ARRAY)" + error.getMessage());
         }
     }
-    
-    public void Insertar(){ 
-        String nombre =txtProducto.getText();
-        String total =txtTotalFinal.getText();
-        int cantidad = Integer.parseInt(txtCantidad.getValue().toString());
-        // Conectar a la base de datos MySQL
-        conn = conexion.conectar();
-        
-        
-        // Obtener el modelo del JTable temporal
-        try{
-            
-            // Obtener el último ID de la tabla
-            String sql = "SELECT MAX(id_venta) FROM Venta";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-            int ultimoId = 0;
-            if (rs.next()) {
-                ultimoId = rs.getInt(1);
-            }
-
-            // Sumar 1 al último ID para obtener el siguiente ID disponible
-            int siguienteId = ultimoId + 1;
-            
-            for (int i = 0; i < modelo2.getRowCount(); i++) {
-            
-            String columna2 = modelo2.getValueAt(i, 1).toString();
-            String columna3 = modelo2.getValueAt(i, 2).toString();
-            String columna4 = modelo2.getValueAt(i, 3).toString();
-
-            sql = "INSERT INTO DetalleVenta (Venta_id_venta,nombre_producto,precio_producto,cantidad_producto)"
-                                        + "VALUES(?,?,?,?)";
-            
-            stmt = conn.prepareStatement(sql);
-            
-            stmt.setInt(1, siguienteId);
-            stmt.setString(2, columna2);
-            stmt.setString(3, columna3);
-            stmt.setString(4, columna4);
-            stmt.executeUpdate();
-            }
-            // Cerrar la conexión a la base de datos
-            
-            conn.close();
-            
-        }catch(SQLException error){
-                    System.out.println("Error en Modificar (SQL)" + error.getMessage());
-                }catch(ArrayIndexOutOfBoundsException error){
-                    System.out.println("Error en Modificar (ARRAY)" + error.getMessage());
-                }
-            
-    }//Insertar datos
     private void fechaSistema(){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String fechaLlegada = (dtf.format(LocalDateTime.now()));
         txtLlegada.setText(fechaLlegada);
     }
-    //---------------------------------------------------------------------------------------------
-        
-        public void InsertarDatosTabla(){
-            String nombreUsuario = lblNombre.getText();
-            String fechaLlegada = txtLlegada.getText();
-            String total =txtTotalFinal.getText();
-            try{
-                    String sql = "INSERT INTO Venta (fecha_venta,total_venta,Usuario_id_Usuario)"
-                            + "VALUES('" + fechaLlegada + "','" + total + "', '" + nombreUsuario +"')";
-                    conn = conexion.conectar();
-                    st = conn.createStatement();
-                    st.executeUpdate(sql);
-                    showMessageDialog(this, "Nueva venta registrada");
-                    limpiar();
-
-            }catch(Exception error){
-                System.out.println("Error en Insetar datos" + error);
-            }
-            limpiartTxt();
-        }//Insertar datos  
+    //---------------------------------------------------------------------------------------------  
         
         public void tabla(){
             tblVenta.setModel(modelo2);
         }
     
         public void MostrarBD() {
-        String sql = "SELECT * FROM  Producto";
+        String sql = "SELECT * FROM  almacen";
         conn = conexion.conectar();
         System.out.println(sql);
         String[] datos = new String[5];
@@ -535,33 +485,75 @@ public class Realizar_Venta extends javax.swing.JFrame {
             System.out.println("Error en Mostrar Tabla" + error);
         }
     }//MostrarDatos
+        
+                
+    public void modificar(){
+        //String unidades =txtUnidades.getText();
+        //String ID =txtID.getText();
+               
+        try{           
+            for (int i = 0; i < modelo2.getRowCount(); i++) {
+                int ID = Integer.parseInt(modelo2.getValueAt(i, 0).toString());
+                String sqlSelect = "SELECT existencia from almacen,Detalleventa WHERE  id_producto = '" + ID +"'";               
+                conn = conexion.conectar();
+                PreparedStatement pstmtSelect = conn.prepareStatement(sqlSelect);
+                rs = pstmtSelect.executeQuery();
+                
+                int unidadesVendidas = 0;
+                if (rs.next()) {
+                    unidadesVendidas = rs.getInt("unidades_paquete");
+                }
+                
+                int cantidadActual = Integer.parseInt(modelo2.getValueAt(i, 3).toString());                               
+                int unidadesA = unidadesVendidas - cantidadActual ;           
+                String sql = "UPDATE almacen,Detalleventa SET existencia = '" + unidadesA + "'" 
+                                + "WHERE  id_producto = '" + ID +"'";
+                conn = conexion.conectar();
+                st = conn.createStatement();
+                st.executeUpdate(sql);
+            }
+              
+                           
+        }catch(SQLException error){
+            System.out.println("Error en Modificar (SQL)" + error.getMessage());
+        }catch(ArrayIndexOutOfBoundsException error){
+            System.out.println("Error en Modificar (ARRAY)" + error.getMessage());
+        }
+    }       
+    
+    public void act(){
+        tblVenta.getModel();
+        int rowIndex = tblVenta.getSelectedRow();
+        modelo2.removeRow(rowIndex);
+        modelo2.fireTableDataChanged();
+    }
     
     public void ModificarUnidades(){
-                String unidades =txtUnidades.getText();
-                String ID =txtID.getText();
-                try{
-                    
-                    if(unidades.equals("")) {
-                        showMessageDialog(this, "Campos Vacios");
-                        limpiartTxt();
-                    } else {
-                        String sql = "UPDATE Producto SET unidades_paquete = '" + unidades + "'" 
-                                + "WHERE  id_producto = '" + ID +"'";
+        String unidades =txtUnidades.getText();
+        String ID =txtID.getText();
+        try{
 
-                        conn = conexion.conectar();
-                        st = conn.createStatement();
-                        st.executeUpdate(sql);
-                    }
-                }catch(SQLException error){
-                    System.out.println("Error en Modificar (SQL)" + error.getMessage());
-                }catch(ArrayIndexOutOfBoundsException error){
-                    System.out.println("Error en Modificar (ARRAY)" + error.getMessage());
-                }
+            if(unidades.equals("")) {
+                showMessageDialog(this, "Campos Vacios");
+                limpiartTxt();
+            } else {
+                String sql = "UPDATE almacen SET existencias = '" + unidades + "'" 
+                        + "WHERE  id_producto = '" + ID +"'";
+
+                conn = conexion.conectar();
+                st = conn.createStatement();
+                st.executeUpdate(sql);
+            }
+        }catch(SQLException error){
+            System.out.println("Error en Modificar (SQL)" + error.getMessage());
+        }catch(ArrayIndexOutOfBoundsException error){
+            System.out.println("Error en Modificar (ARRAY)" + error.getMessage());
+        }
         }    
         
-    public void limpiar() {
-        for (int i = 0; i <= tblRegistroVenta.getRowCount(); i++) {
-            modelo.removeRow(i);
+    public void limpiar(){
+        for (int i = 0; i <= tblVenta.getRowCount(); i++) {
+            modelo2.removeRow(i);
             i = i - 1;
         }
     }
@@ -569,13 +561,14 @@ public class Realizar_Venta extends javax.swing.JFrame {
         txtID.setText("");
         txtProducto.setText("");
         txtPrecio.setText("");
+        txtUnidades.setText("");
         txtSubtotal.setText("");
         txtCantidad.setValue("1");
-        txtUnidades.setText("");
-        txtPago.setText("");
-        txtCambio.setText("");
-        
+        txtPago.setText("0");
+        txtCambio.setText("0");
+        txtTotalFinal.setText("0");      
     }
+    
         
     public void Buscar(){ //METODO DE BUSCAR QUE PROXIMAMENTE SERA REEMPLAZADO
         String producto =txtProducto.getText();
@@ -609,12 +602,6 @@ public class Realizar_Venta extends javax.swing.JFrame {
         Buscar();
     }//GEN-LAST:event_Buscar2MouseClicked
 
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-        Principal v = new Principal();
-        v.setVisible(true);
-        this.dispose();   
-    }//GEN-LAST:event_jLabel8MouseClicked
-
     private void txtSubtotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSubtotalActionPerformed
         
     }//GEN-LAST:event_txtSubtotalActionPerformed
@@ -622,14 +609,18 @@ public class Realizar_Venta extends javax.swing.JFrame {
         float unidades = Float.parseFloat(txtUnidades.getText());
         float precio = Float.parseFloat(txtPrecio.getText());
         float cantidad = Float.parseFloat(txtCantidad.getValue().toString());
-        
-        if( cantidad > unidades ){
-            showMessageDialog(this,"Las unidades exceden la cantidad disponible");
-        }else{
+
           txtSubtotal.setText(String.valueOf(cantidad * precio));
-        }
+        
         //SOLO NOS SERVIRIA PARA SACAR EL TOTAL POR MEDIO DE UN BOTON QUE SERA REEMPLAZADO DE MANERA AUTOMATICA 
-    }    
+    }  
+    public void limpiart(){
+       txtTotalFinal.setText("0.0");
+       limpiar();
+       modelo.setRowCount(0);
+       MostrarBD();
+       limpiartTxt();
+    }
     private void pagar(){
         
     float subtotal = Float.parseFloat(txtTotalFinal.getText());
@@ -638,9 +629,16 @@ public class Realizar_Venta extends javax.swing.JFrame {
         if(pago < subtotal){
             showMessageDialog(this,"Dinero insuficiente, le hacen falta: $" + (subtotal - pago));
         }
-        else{
+        else if(txtPago.equals(" ")){
+            showMessageDialog(this,"Favor de llenar los campos");
+        }else{
             txtCambio.setText(String.valueOf(pago - subtotal));
-            showMessageDialog(this,"Que tenga buen dia, su cambio es: $" +(pago - subtotal));         
+            pruebas();                    
+            modificar();
+            modelo.setRowCount(0);
+            MostrarBD(); 
+            ticket();  
+            limpiart();
         }
     }
 
@@ -672,8 +670,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarKeyPressed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-       // newBuscar();
-        filtro(txtBuscar.getText(), tblRegistroVenta);
+        newBuscar();
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
@@ -681,16 +678,10 @@ public class Realizar_Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarActionPerformed
 
     private void txtPagoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPagoKeyPressed
-
         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
             pagar();
-
         }
     }//GEN-LAST:event_txtPagoKeyPressed
-
-    private void txtTotalFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalFinalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTotalFinalActionPerformed
 
     private void tblRegistroVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRegistroVentaMouseClicked
         int fila = tblRegistroVenta.getSelectedRow();
@@ -715,20 +706,16 @@ public class Realizar_Venta extends javax.swing.JFrame {
         }//EVENTO QUE AL DAR CLICK NOS DESPLIEGUE TODA LA INFROMACION DE LAS TABLAS A NUESTROS TEXTFIELD
     }//GEN-LAST:event_tblRegistroVentaMouseClicked
     private void agregarTotal(){
-        float unidades = Float.parseFloat(txtUnidades.getText());
-        float cantidad = Float.parseFloat(txtCantidad.getValue().toString());
+        double unidades = Double.parseDouble(txtUnidades.getText());
+        double cantidad = Double.parseDouble(txtCantidad.getValue().toString());
         
-        String sub = txtSubtotal.getText();
-        String Fsub = txtTotalFinal.getText();
-        
-        float subTotal = Float.parseFloat(sub);
-        float Total = Float.parseFloat(Fsub);
+        double total = Double.parseDouble(txtTotalFinal.getText());
+        double subtotal = Double.parseDouble(txtSubtotal.getText());
+
        
         try {
-            //txtUnidades.setText(String.valueOf(unidades - cantidad));
-            float resultado = subTotal + Total;
+            double resultado = subtotal + total;
             txtTotalFinal.setText(String.valueOf(resultado));
-            //ModificarUnidades();
             modelo.setRowCount(0);
             MostrarBD();
             limpiartTxt();
@@ -738,33 +725,51 @@ public class Realizar_Venta extends javax.swing.JFrame {
         }
     }
     
-     public void filtro(String consulta, JTable Tabla){
-        DefaultTableModel modelo = (DefaultTableModel) Tabla.getModel();
-        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(modelo);
-        Tabla.setRowSorter(tr);
-        tr.setRowFilter(RowFilter.regexFilter(consulta));
-    
-    }
-    
-    public void addNewTable(){        
+    public void RespladoADDNEW(){        
         ID =txtID.getText();
         String nombre =txtProducto.getText();
-        String total =txtPrecio.getText();
-        String Subtotal =txtSubtotal.getText();
+        double precio = Double.parseDouble(txtPrecio.getText());
+        double Subtotal =Double.parseDouble(txtSubtotal.getText());
         int cantidad = Integer.parseInt(txtCantidad.getValue().toString());
 
         // -----------------------------------------------------
             Object datos[] = new Object[]{
                 ID,
                 nombre,
-                total,
+                precio,
                 cantidad,
                 Subtotal
-        };            
+        };   
+        actuT();
          modelo2.addRow(datos);             
     }
+    
+    public void addNewTable(){        
+        ID =txtID.getText();
+        String nombre =txtProducto.getText();
+        double precio = Double.parseDouble(txtPrecio.getText());
+        double Subtotal =Double.parseDouble(txtSubtotal.getText());
+        int cantidad = Integer.parseInt(txtCantidad.getValue().toString());       
+        
+        // -----------------------------------------------------
+            Object datos[] = new Object[]{
+                ID,
+                nombre,
+                precio,
+                cantidad,
+                Subtotal
+        };  
+        actuT();
+         modelo2.addRow(datos); 
+    }
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
-        agregar();               
+        String producto = txtProducto.getText();
+        
+        if(producto.isEmpty()){
+            showMessageDialog(this,"Favor de escoger productos");
+        }else{
+           agregar(); 
+        }                   
     }//GEN-LAST:event_btnAñadirActionPerformed
 
     private void VentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VentasMouseClicked
@@ -778,83 +783,153 @@ public class Realizar_Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_tblVentaMouseClicked
 
     private void txtCantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyPressed
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            Subtotal();
 
-        }
     }//GEN-LAST:event_txtCantidadKeyPressed
 
     private void txtCantidadStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtCantidadStateChanged
-        Subtotal();
+        float unidades = Float.parseFloat(txtUnidades.getText());
+        float cantidad = Float.parseFloat(txtCantidad.getValue().toString());
+        
+        
+        if( cantidad > unidades ){
+            JOptionPane.showMessageDialog(this, "Las unidades exceden la cantidad disponible", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        }else{
+            Subtotal();
+        }
+        
     }//GEN-LAST:event_txtCantidadStateChanged
+    
+    
+    
     private void agregar(){
-        ID =txtID.getText();        
+        ID =txtID.getText();     
+        String producto = txtProducto.getText();
         int cantidad = Integer.parseInt(txtCantidad.getValue().toString());
         double total = Double.parseDouble(txtTotalFinal.getText());
         double Subtotal = Double.parseDouble(txtSubtotal.getText());
-        
+
         for (int i = 0; i < modelo2.getRowCount(); i++) {
         String idTable = modelo2.getValueAt(i, 0).toString();
 
-            if (ID.equals(idTable)) {
-                // Si se encuentra el ID, actualizar la cantidad correspondiente
-                int cantidadActual = Integer.parseInt(modelo2.getValueAt(i, 3).toString());
-                int cantidadIngresada = cantidadActual + cantidad;
-                modelo2.setValueAt(cantidadIngresada, i, 3);
-                
-                double subtotalActual = Double.parseDouble(modelo2.getValueAt(i, 4).toString());
-                double nuevoSubTotal = subtotalActual + Subtotal;
-                modelo2.setValueAt(nuevoSubTotal, i, 4);
-                
-                // Actualizar el total basado en el precio del producto
-                double precio = Double.parseDouble(modelo2.getValueAt(i, 2).toString());
-                double nuevoCantidad = precio * cantidad;
-                double nuevoTotal = nuevoCantidad + total;
-                                              
-                txtTotalFinal.setText(String.valueOf(nuevoTotal));
-                
-                return; // salir del método ya que se encontró el ID
+        if (ID.equals(idTable)) {
+            // Si se encuentra el ID, actualizar la cantidad correspondiente
+            int cantidadActual = Integer.parseInt(modelo2.getValueAt(i, 3).toString());
+            int cantidadIngresada = cantidadActual + cantidad;
+            modelo2.setValueAt(cantidadIngresada, i, 3);
+
+            double subtotalActual = Double.parseDouble(modelo2.getValueAt(i, 4).toString());
+            double nuevoSubTotal = subtotalActual + Subtotal;
+            modelo2.setValueAt(nuevoSubTotal, i, 4);
+
+            // Actualizar el total basado en el precio del producto
+            double precio = Double.parseDouble(modelo2.getValueAt(i, 2).toString());
+            double nuevoCantidad = precio * cantidad;
+            double nuevoTotal = nuevoCantidad + total;
+
+            txtTotalFinal.setText(String.valueOf(nuevoTotal));
+
+            return; // salir del método ya que se encontró el ID
             }
         }
         // Si no se encontró el ID, agregar una nueva fila con el ID y la cantidad ingresada
         addNewTable();
-        agregarTotal();
+        agregarTotal();  
     }
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
-        pruebas();
-        //Insertar();
-        //InsertarDatosTabla(); 
-        
+       pagar();  
     }//GEN-LAST:event_btnPagarActionPerformed
 
-    private void tblVentaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblVentaKeyReleased
-       
-    }//GEN-LAST:event_tblVentaKeyReleased
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+        Login v = new Login();
+        v.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenu1MouseClicked
 
-    private void txtBuscar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscar2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtBuscar2ActionPerformed
-
-    private void txtBuscar2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscar2KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtBuscar2KeyPressed
-
-    private void txtBuscar2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscar2KeyReleased
-         filtro(txtBuscar2.getText(), tblVenta);
-    }//GEN-LAST:event_txtBuscar2KeyReleased
-
-    private void Buscar3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Buscar3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Buscar3MouseClicked
+    public void ticket(){
+        //GENERAR TICKET 
+        Ticket ticket = new Ticket(lblNombre.getText(),txtTotalFinal.getText(),txtPago.getText(),txtCambio.getText(),""+ultimoId);
+        ticket.setVisible(true);
+        
+        int cont=20;
+        for(int i=0; i<cont; i++){
+            if(i<tblVenta.getRowCount()){
+                String Nombre = tblVenta.getValueAt(i, 1).toString();
+                String Precio = tblVenta.getValueAt(i, 2).toString();
+                String Unidades = tblVenta.getValueAt(i, 3).toString();
+                String Subtotal = tblVenta.getValueAt(i, 4).toString();
+                ticket.pnlProductos.add(new Articulo(Nombre,Unidades,Precio,Subtotal));
+            }else{
+                ticket.pnlProductos.add(new Articulo());
+            }
+        }
+        this.validate();
+        this.repaint();
+    }
+    
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_jMenu2MouseClicked
 
     private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
-       String Save = txtTotalFinal.getText();
-               Gestionar_CorteFin Corte = new Gestionar_CorteFin();
-                Corte.setCampoSave(Save); 
-                Corte.setVisible(true); // Mostrar la otra ventana
-         this.dispose();
-        
+
+        Gestionar_Corte Corte = new Gestionar_Corte();
+        Corte.setVisible(true); // Mostrar la otra ventana
+        this.dispose();
+
     }//GEN-LAST:event_BtnSaveActionPerformed
+
+    private void txtCambioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCambioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCambioActionPerformed
+
+    private void txtPagoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPagoMousePressed
+        txtPago.setText("");
+    }//GEN-LAST:event_txtPagoMousePressed
+
+    private void txtTotalFinalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTotalFinalMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalFinalMousePressed
+
+    private void txtTotalFinalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalFinalKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalFinalKeyPressed
+    public void actuT(){
+        int maxFilas = 10; // Ejemplo: máximo 10 filas permitidas
+
+        int filasActuales = modelo.getRowCount();
+            
+        if (filasActuales > maxFilas) {
+            int numFilasEliminar = filasActuales - maxFilas;
+            for (int i = 0; i < numFilasEliminar; i++) {
+                modelo.removeRow(maxFilas); // Eliminar las filas excedentes desde el índice "maxFilas"
+            }
+        }
+        
+    }
+    public void sumaTabla(){
+        tblVenta.getModel();
+        
+        double suma = 0.0;
+        
+        int columnaSeleccionada = 4; // Ejemplo: suma de la columna con índice 2
+        for (int fila = 0; fila < modelo2.getRowCount(); fila++) {
+            double valor = Double.parseDouble(modelo2.getValueAt(fila, columnaSeleccionada).toString());
+            suma += valor;
+        }
+        txtTotalFinal.setText("" + suma);
+           
+    }
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        act(); 
+        sumaTabla();
+        //actuT();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        Principal v = new Principal();
+        v.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel9MouseClicked
 
     public static void main(String args[]) {
 
@@ -868,10 +943,10 @@ public class Realizar_Venta extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnSave;
     private javax.swing.JLabel Buscar2;
-    private javax.swing.JLabel Buscar3;
     private javax.swing.JLabel Ventas;
     private javax.swing.JButton btnAñadir;
     private javax.swing.JButton btnPagar;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
@@ -885,7 +960,10 @@ public class Realizar_Venta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -899,7 +977,6 @@ public class Realizar_Venta extends javax.swing.JFrame {
     private javax.swing.JTable tblRegistroVenta;
     private javax.swing.JTable tblVenta;
     private javax.swing.JTextField txtBuscar;
-    private javax.swing.JTextField txtBuscar2;
     private javax.swing.JTextField txtCambio;
     private javax.swing.JSpinner txtCantidad;
     private javax.swing.JTextField txtID;

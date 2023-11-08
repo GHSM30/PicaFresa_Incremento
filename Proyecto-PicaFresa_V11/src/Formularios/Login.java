@@ -6,6 +6,7 @@ import Clases.ConexionBD;
 import Clases.ConexionDB;
 import Clases.Metodos_sql;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -122,6 +123,11 @@ public class Login extends javax.swing.JFrame {
         txtContra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtContraActionPerformed(evt);
+            }
+        });
+        txtContra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtContraKeyPressed(evt);
             }
         });
         jPanel1.add(txtContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 180, 30));
@@ -269,6 +275,12 @@ public class Login extends javax.swing.JFrame {
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         System.exit(0);
     }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void txtContraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            IniciarSesion2();
+        }
+    }//GEN-LAST:event_txtContraKeyPressed
 
     public static void main(String args[]) {
         

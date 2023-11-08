@@ -62,10 +62,6 @@ public class Realizar_Venta extends javax.swing.JFrame {
 
         
     }
-    
-    public void ObtenerUltimoRegistro(){
-        
-    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -337,7 +333,8 @@ public class Realizar_Venta extends javax.swing.JFrame {
         });
         jPanel1.add(BtnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 70, 130, -1));
 
-        txtTotalFinal.setText("0");
+        txtTotalFinal.setText("0.0");
+        txtTotalFinal.setToolTipText("");
         txtTotalFinal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 txtTotalFinalMousePressed(evt);
@@ -473,7 +470,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
             while (rs.next()) {
                 datos[0] = rs.getString(1);
                 datos[1] = rs.getString(2);
-                datos[2] = rs.getString(5);
+                datos[2] = rs.getString(3);
                 datos[3] = rs.getString(6);
 
 
@@ -488,32 +485,27 @@ public class Realizar_Venta extends javax.swing.JFrame {
         
                 
     public void modificar(){
-        //String unidades =txtUnidades.getText();
-        //String ID =txtID.getText();
-               
         try{           
             for (int i = 0; i < modelo2.getRowCount(); i++) {
                 int ID = Integer.parseInt(modelo2.getValueAt(i, 0).toString());
-                String sqlSelect = "SELECT existencia from almacen,Detalleventa WHERE  id_producto = '" + ID +"'";               
+                String sqlSelect = "SELECT existencias from almacen,Detalleventa WHERE  id_producto = '" + ID +"'";               
                 conn = conexion.conectar();
                 PreparedStatement pstmtSelect = conn.prepareStatement(sqlSelect);
                 rs = pstmtSelect.executeQuery();
                 
                 int unidadesVendidas = 0;
                 if (rs.next()) {
-                    unidadesVendidas = rs.getInt("unidades_paquete");
+                    unidadesVendidas = rs.getInt("existencias");
                 }
                 
                 int cantidadActual = Integer.parseInt(modelo2.getValueAt(i, 3).toString());                               
                 int unidadesA = unidadesVendidas - cantidadActual ;           
-                String sql = "UPDATE almacen,Detalleventa SET existencia = '" + unidadesA + "'" 
+                String sql = "UPDATE almacen,Detalleventa SET existencias = '" + unidadesA + "'" 
                                 + "WHERE  id_producto = '" + ID +"'";
                 conn = conexion.conectar();
                 st = conn.createStatement();
                 st.executeUpdate(sql);
-            }
-              
-                           
+            }                                         
         }catch(SQLException error){
             System.out.println("Error en Modificar (SQL)" + error.getMessage());
         }catch(ArrayIndexOutOfBoundsException error){
@@ -621,7 +613,7 @@ public class Realizar_Venta extends javax.swing.JFrame {
        MostrarBD();
        limpiartTxt();
     }
-    private void pagar(){
+    private void pagar(){ 
         
     float subtotal = Float.parseFloat(txtTotalFinal.getText());
     float pago = Float.parseFloat(txtPago.getText());
@@ -705,25 +697,18 @@ public class Realizar_Venta extends javax.swing.JFrame {
 
         }//EVENTO QUE AL DAR CLICK NOS DESPLIEGUE TODA LA INFROMACION DE LAS TABLAS A NUESTROS TEXTFIELD
     }//GEN-LAST:event_tblRegistroVentaMouseClicked
-    private void agregarTotal(){
-        double unidades = Double.parseDouble(txtUnidades.getText());
-        double cantidad = Double.parseDouble(txtCantidad.getValue().toString());
-        
-        double total = Double.parseDouble(txtTotalFinal.getText());
+    private void agregarTotal() {
+    try {
         double subtotal = Double.parseDouble(txtSubtotal.getText());
-
-       
-        try {
-            double resultado = subtotal + total;
-            txtTotalFinal.setText(String.valueOf(resultado));
-            modelo.setRowCount(0);
-            MostrarBD();
-            limpiartTxt();
-
-        }catch (NumberFormatException e){
-
-        }
+        double total = Double.parseDouble(txtTotalFinal.getText());
+        
+        double resultado = subtotal + total;
+        txtTotalFinal.setText(String.valueOf(resultado));
+        // No es necesario limpiar el modelo aquí, ya que no afecta al total
+    } catch (NumberFormatException e) {
+        // Maneja la excepción si es necesario
     }
+}
     
     public void RespladoADDNEW(){        
         ID =txtID.getText();

@@ -331,11 +331,12 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         String Tipo = cmbCategoria.getSelectedItem().toString();
         String FechaCaducidad = txtFechaCaducidad.getText();
         //Si el proveedor se selecciona ocmo Otro entonces se insertan los datos en Almacen
-        if (Proveedor.equals("Otro")) {
+        if (Proveedor!="Otro") {
             try {
                 //Sentencia DML para insertar datos
-                String sql = "INSERT INTO Almacen (Nombre_producto, Existencias, Fecha_llegada, Fecha_caducidad, Precio,Proveedor,categoria_producto_idCategoria_Producto,venta_id_venta,venta_Usuario_id_Usuario, factura_idFactura ,factura_Proveedor_idProveedor)"
-                        + "VALUES('" + Nombre + "','" + Existencias + "', '" + FechaLL + "', '" + FechaCaducidad + "','" + Precio + "','" + Proveedor + "','" +1+"','"+0+"','"+0+"','"+0+"','"+0+"')";
+                String sql = "INSERT INTO producto (nombre_producto,existencias,fecha_llegada,fecha_caducidad,Precio,fk_idCategoria_Producto,Proveedor_id_proveedor)"
+                    + " VALUES('" + Nombre + "','" + Existencias +"','" + FechaLL+ "','" + FechaCaducidad + "','" + Precio + "','" + 1+ "','" + 1 + "')";
+           
                 conn = conexion.conectar();                                                                                                 
                 st = conn.createStatement();
                 st.executeUpdate(sql);
@@ -354,9 +355,8 @@ public class Gestionar_Producto extends javax.swing.JFrame {
                     showMessageDialog(this, "Campos Vacios o No Llenados. Verificar");
                     limpiartTxt();
                 } else {
-                    String sql = "UPDATE Almacen SET Nombre_producto ='" + Nombre + "', Existencias = '" + Existencias + "', Fecha_llegada = '"
-                            + FechaLL + "', Fecha_caducidad = '" + FechaCaducidad + "', Proveedor = '" + Proveedor + "', categoria_producto_idCategoria_Producto = '" + Tipo
-                            + "' WHERE  Nombre_producto = '" + Nombre + "'";
+                    String sql = "UPDATE producto SET nombre_producto = '" + Nombre + "', existencias = '"  + Existencias + "',fecha_llegada = '" + FechaLL + "',fecha_caducidad = '" + FechaCaducidad + "', Precio = '" + Precio 
+                        + "' WHERE nombre_producto = '" + Nombre + "'";
                     conn = conexion.conectar();
                     st = conn.createStatement();
                     st.executeUpdate(sql);
@@ -376,7 +376,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         String Existencias = "0";
         String ID = "";
         try {
-            String sql = "SELECT id_producto FROM Almacen WHERE nombre_producto='" + Producto + "'";
+            String sql = "SELECT id_producto FROM producto WHERE nombre_producto= '" + Producto + "'";
             st = conn.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -389,7 +389,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
             System.out.println("ID NO encontrado" + error);
         }
         try {
-            String sql = "INSERT INTO Almacen (existencias,Producto_id_producto)"
+            String sql = "INSERT INTO almacen (Existencias,Producto_id_producto)"
                     + "VALUES('" + Existencias + "','" + ID + "')";
             conn = conexion.conectar();
             st = conn.createStatement();
@@ -403,7 +403,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
     }//Insertar datos
 
     public void MostrarBD() {
-        String sql = "SELECT * FROM  Almacen";
+        String sql = "SELECT * FROM  producto";
         conn = conexion.conectar();
         System.out.println(sql);
         String[] datos = new String[7];
@@ -418,6 +418,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
                 datos[4] = rs.getString(6);
                 datos[5] = rs.getString(7);
                 datos[6] = rs.getString(8);
+                
 
                 modelo.addRow(datos);
 
@@ -433,14 +434,17 @@ public class Gestionar_Producto extends javax.swing.JFrame {
             String Nombre =txtNombre.getText();       
             String Exi =txtExistencias.getText();
             String Precio =txtPrecio.getText();
+            String fecha_cad =txtFechaCaducidad.getText();
             
             try{                    
-                if(Nombre.equals("") || Precio.equals("") || cmbProveedor.getSelectedIndex()==0) {
+                if(Nombre.equals("") || Precio.equals("") || cmbProveedor.getSelectedIndex()==0 || fecha_cad.equals("")) {
                     showMessageDialog(this, "Campos Vacios o No Llenados. Verificar");
                     limpiartTxt();
                 } else {
-                    String sql = "UPDATE almacen SET Nombre_producto ='" + Nombre + "', Existencias = '"  + Exi + "', Precio = '" + Precio 
-                            +  "WHERE  Nombre_producto = '" + Nombre + "'";
+                    String sql = "UPDATE producto SET nombre_producto = '" + Nombre + "', existencias = '"  + Exi + "',fecha_llegada = '" + txtFechaLlegada.getText() + "',fecha_caducidad = '" + fecha_cad + "', Precio = '" + Precio 
+                        + "' WHERE nombre_producto = '" + Nombre + "'";
+
+
                     conn = conexion.conectar();
                     st = conn.createStatement();
                     st.executeUpdate(sql);

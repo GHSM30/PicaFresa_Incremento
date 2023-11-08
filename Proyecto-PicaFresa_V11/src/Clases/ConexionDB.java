@@ -10,7 +10,7 @@ public class ConexionDB {
         try {
             String url = "jdbc:mysql://localhost/BD_PicaFresa"; // URL de la base de datos
             String user = "root"; // Usuario de la base de datos
-            String password = "123Guillermillo2001"; // Contraseña de la base de datos
+            String password = "12345678"; // Contraseña de la base de datos
             conn = DriverManager.getConnection(url, user, password);
             System.out.println("Conexión establecida.");
         } catch (SQLException e) {

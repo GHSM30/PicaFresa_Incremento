@@ -10,7 +10,7 @@ public class ConexionBD {
 
 
 
-    public static String password = "123Guillermillo2001"; // Contraseña de la base de datos
+    public static String password = "12345678"; // Contraseña de la base de datos
 
     public static String clase = "com.mysql.cj.jdbc.Driver";
 

@@ -39,6 +39,7 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         txtLlegada.setEditable(false);
         fechaSistema();
         llenarCmbProveedor();
+        cmbAux.setVisible(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -74,6 +75,7 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         Productos = new javax.swing.JLabel();
         Almacen = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        cmbAux = new javax.swing.JComboBox<>();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -250,6 +252,8 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 10, 80, 50));
 
+        jPanel1.add(cmbAux, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 620, 30, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -270,10 +274,16 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         String fechaCaducidad = ((JTextField) jdchCaducidad.getDateEditor().getUiComponent()).getText();
         String Estado = cmbEstado.getSelectedItem().toString();
 
+        Object ID = cmbAux.getSelectedItem();
+                String idP = (String) ID; // Convertir el objeto a String
+                int idProv = Integer.parseInt(idP); // Convertir el String a un entero
+
+        
         if (caducidadValida(fechaLlegada, fechaCaducidad)) {
             try {
+    
                 String sql = "INSERT INTO Factura (Fecha_llegada,Fecha_caducidad,Estado,Proveedor_idProveedor)"
-                        + "VALUES('" + fechaLlegada + "','" + fechaCaducidad + "', '" + Estado + "','" + cmbProveedor.getSelectedItem().toString().substring(0, 1) + "')";
+                        + "VALUES('" + fechaLlegada + "','" + fechaCaducidad + "', '" + Estado + "','" + idProv + "')";
                 conn = conexion.conectar();
                 st = conn.createStatement();
                 st.executeUpdate(sql);
@@ -396,6 +406,7 @@ public class Gestionar_Factura extends javax.swing.JFrame {
                 datos[1] = rs.getString(2);
 
                 cmbProveedor.addItem(datos[0] + " - " + datos[1]);
+                cmbAux.addItem(datos[0]);
             }
             tblFacturas.setModel(factura);
         } catch (SQLException error) {
@@ -507,6 +518,7 @@ public class Gestionar_Factura extends javax.swing.JFrame {
     private javax.swing.JLabel Proveedor;
     private javax.swing.JLabel btnAgregarF;
     private javax.swing.JLabel btnModificarF;
+    private javax.swing.JComboBox<String> cmbAux;
     private javax.swing.JComboBox<String> cmbEstado;
     private javax.swing.JComboBox<String> cmbProveedor;
     private javax.swing.JLabel jLabel1;

@@ -280,9 +280,10 @@ public class Gestionar_Almacen extends javax.swing.JFrame {
     //-------------------------------------------------------------------------------------------
     public void MostrarBD() {
         modelo.setRowCount(0);
-        String sql = "SELECT id_producto, Nombre_producto,Existencias,Fecha_llegada,Fecha_caducidad,idFactura,id_proveedor,Nombre_proveedor FROM Almacen,Factura,Proveedor "
-                + "WHERE idFactura=Factura_idFactura  and id_proveedor=Proveedor_id_proveedor and id_proveedor=Proveedor_idProveedor "
-                + "ORDER BY idFactura";
+        String sql = "SELECT Nombre_producto, Existencias, Almacen.Fecha_llegada, Almacen.Fecha_Caducidad, idFactura, Precio, Nombre_proveedor\n" +
+            "FROM Almacen, Factura, Proveedor\n" +
+            "WHERE factura_idFactura = idFactura\n" +
+            "AND id_proveedor = Proveedor_idProveedor\n";
         conn = conexion.conectar();
         System.out.println(sql);
         String[] datos = new String[8];
@@ -373,14 +374,16 @@ public class Gestionar_Almacen extends javax.swing.JFrame {
                     cmbProveedor.addItem(datos[0]+" - "+datos[1]);
                 }
             } catch (SQLException error) {
-                System.out.println("Error en Mostrar Tabla Factura" + error);
+                System.out.println("Error en Mostrar Tabla Proveedor" + error);
             }
     }
+    
+    
     //-------------------------------------------------------------------------------------------    
-    private void llenarCmbProducto(){
+ /*   private void llenarCmbProducto(){
         cmbProducto.removeAllItems();
         cmbProducto.addItem("-SELECCIONAR-");
-        String sql = "SELECT id_producto,Nombre_producto FROM PRODUCTO WHERE PROVEEDOR_ID_PROVEEDOR="+cmbProveedor.getSelectedItem().toString().substring(0,1);
+        String sql = "SELECT id_producto,Nombre_producto FROM Almacen WHERE PROVEEDOR_ID_PROVEEDOR="+cmbProveedor.getSelectedItem().toString().substring(0,1);
         conn = conexion.conectar();
         System.out.println(sql);
         String[] datos = new String[2];
@@ -394,14 +397,14 @@ public class Gestionar_Almacen extends javax.swing.JFrame {
                 cmbProducto.addItem(datos[0]+" - "+datos[1]);
             }
         } catch (SQLException error) {
-            System.out.println("Error en Mostrar Tabla Factura" + error);
+            System.out.println("Error en Mostrar Tabla Producto" + error);
         }
     }
     //-------------------------------------------------------------------------------------------
-    private void llenarCmbFactura(){
+ /*   private void llenarCmbFactura2(){
         cmbFactura.removeAllItems();
         cmbFactura.addItem("-SELECCIONAR-");
-        String sql = "SELECT idFactura,Estado FROM FACTURA WHERE PROVEEDOR_IDPROVEEDOR="+cmbProveedor.getSelectedItem().toString().substring(0,1)+" AND ESTADO='pendiente'";
+        String sql = "SELECT idFactura,Estado FROM FACTURA WHERE PROVEEDOR_IDPROVEEDOR="+cmbProveedor.getSelectedItem().toString().substring(0,1)+" AND ESTADO='Pendiente'";
         conn = conexion.conectar();
         System.out.println(sql);
         String[] datos = new String[2];
@@ -418,6 +421,29 @@ public class Gestionar_Almacen extends javax.swing.JFrame {
             System.out.println("Error en Mostrar Tabla Factura" + error);
         }
     }
+   */ 
+     //-------------------------------------------------------------------------------------------
+    private void llenarCmbFactura(){
+        cmbFactura.removeAllItems();
+        cmbFactura.addItem("-SELECCIONAR-");
+        String sql = "SELECT idFactura,Estado FROM Factura WHERE Proveedor_idProveedor="+ 13/*cmbProveedor.getSelectedItem().toString().substring(0,1)*/ +" AND ESTADO='Pendiente' ";
+            conn = conexion.conectar();
+            System.out.println(sql);
+            String[] datos = new String[2];
+            try {
+                st = conn.createStatement();
+                rs = st.executeQuery(sql);
+                while (rs.next()) {
+                    datos[0] = rs.getString(1);              
+                     datos[1] = rs.getString(2);
+
+                    cmbFactura.addItem(datos[0]+" - "+datos[1]);
+                }
+            } catch (SQLException error) {
+                System.out.println("Error en Mostrar Tabla Factura" + error);
+            }
+    }
+    
     //-------------------------------------------------------------------------------------------
     public void filtro(String consulta, JTable Tabla){
         DefaultTableModel modelo = (DefaultTableModel) Tabla.getModel();
@@ -458,7 +484,7 @@ public class Gestionar_Almacen extends javax.swing.JFrame {
     private void cmbProveedorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbProveedorItemStateChanged
         if(cmbProveedor.getSelectedIndex()!=0){
             llenarCmbFactura();
-            llenarCmbProducto();            
+ //           llenarCmbProducto();            
             cmbFactura.setEnabled(true);
             cmbProducto.setEnabled(true);
         }else{

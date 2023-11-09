@@ -40,6 +40,7 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         fechaSistema();
         llenarCmbProveedor();
         cmbAux.setVisible(false);
+        
     }
 
     @SuppressWarnings("unchecked")

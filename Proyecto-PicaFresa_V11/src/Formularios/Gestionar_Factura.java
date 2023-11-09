@@ -39,6 +39,8 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         txtLlegada.setEditable(false);
         fechaSistema();
         llenarCmbProveedor();
+        cmbAux.setVisible(false);
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -59,8 +61,6 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         tblFacturas = new javax.swing.JTable();
         jLabel16 = new javax.swing.JLabel();
-        jdchCaducidad = new com.toedter.calendar.JDateChooser();
-        jLabel15 = new javax.swing.JLabel();
         cmbEstado = new javax.swing.JComboBox<>();
         btnAgregarF = new javax.swing.JLabel();
         btnModificarF = new javax.swing.JLabel();
@@ -74,6 +74,7 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         Productos = new javax.swing.JLabel();
         Almacen = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        cmbAux = new javax.swing.JComboBox<>();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -115,7 +116,7 @@ public class Gestionar_Factura extends javax.swing.JFrame {
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Estado");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 510, 100, 20));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 470, 100, 20));
 
         jLabel7.setFont(new java.awt.Font("Mshtakan", 0, 48)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -142,7 +143,7 @@ public class Gestionar_Factura extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Numero", "Fecha Llegada", "Fecha Caducidad", "Estado", "Proveedor"
+                "Numero", "Fecha Llegada", "Estado", "Proveedor"
             }
         ));
         tblFacturas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -152,22 +153,14 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(tblFacturas);
 
-        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 560, 200));
+        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 600, 200));
 
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Proveedor");
         jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 100, -1));
 
-        jdchCaducidad.setDateFormatString("dd-MM-YYYY");
-        jdchCaducidad.setFocusable(false);
-        jPanel1.add(jdchCaducidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 460, 270, -1));
-
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Fecha Caducidad");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 460, 100, -1));
-
         cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-SELECCIONAR-", "Pendiente", "Completada" }));
-        jPanel1.add(cmbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 510, 270, -1));
+        jPanel1.add(cmbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 470, 270, -1));
 
         btnAgregarF.setText("Agregar");
         btnAgregarF.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -250,6 +243,8 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 10, 80, 50));
 
+        jPanel1.add(cmbAux, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 620, 30, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -265,15 +260,23 @@ public class Gestionar_Factura extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-        private void agregarFactura() {
+    private void agregarFactura() {
         String fechaLlegada = txtLlegada.getText();
-        String fechaCaducidad = ((JTextField) jdchCaducidad.getDateEditor().getUiComponent()).getText();
         String Estado = cmbEstado.getSelectedItem().toString();
 
-        if (caducidadValida(fechaLlegada, fechaCaducidad)) {
+        // Obtener la cadena completa del JComboBox
+        String selectedItem = cmbProveedor.getSelectedItem().toString();
+
+        // Dividir la cadena usando el carácter '-' como delimitador
+        String[] parts = selectedItem.split("-");
+
+        // Obtener el ID (asumiendo que el ID está en la primera parte)
+        Object ID = parts[0].trim();
+
             try {
-                String sql = "INSERT INTO Factura (Fecha_llegada,Fecha_caducidad,Estado,Proveedor_idProveedor)"
-                        + "VALUES('" + fechaLlegada + "','" + fechaCaducidad + "', '" + Estado + "','" + cmbProveedor.getSelectedItem().toString().substring(0, 1) + "')";
+    
+                String sql = "INSERT INTO Factura (Fecha_llegada,Estado,Proveedor_idProveedor)"
+                        + "VALUES('" + fechaLlegada + "', '" + Estado + "','" + ID + "')";
                 conn = conexion.conectar();
                 st = conn.createStatement();
                 st.executeUpdate(sql);
@@ -283,14 +286,10 @@ public class Gestionar_Factura extends javax.swing.JFrame {
                 llenarTablaF();
                 cmbProveedor.setSelectedIndex(0);
                 cmbEstado.setSelectedIndex(0);
-                jdchCaducidad.setDate(null);
 
             } catch (Exception error) {
                 System.out.println("ERROR al registrar Factura\n" + error);
             }
-        } else {
-            showMessageDialog(this, "Fecha de caducidad inválida, verifique que la fecha de caducidad no esté vencida");
-        }
     }
 
     //-------------------------------------------------------------------------------------------
@@ -313,10 +312,10 @@ public class Gestionar_Factura extends javax.swing.JFrame {
     //-------------------------------------------------------------------------------------------
     public void llenarTablaF() {
         factura.setRowCount(0);
-        String sql = "SELECT idFactura,Fecha_llegada,Fecha_caducidad,Estado,Nombre_proveedor FROM FACTURA,PROVEEDOR WHERE id_proveedor=Proveedor_idProveedor";
+        String sql = "SELECT idFactura,Fecha_llegada,Estado,Nombre_proveedor FROM FACTURA,PROVEEDOR WHERE id_proveedor=Proveedor_idProveedor";
         conn = conexion.conectar();
         System.out.println(sql);
-        String[] datos = new String[5];
+        String[] datos = new String[4];
         try {
             st = conn.createStatement();
             rs = st.executeQuery(sql);
@@ -325,7 +324,6 @@ public class Gestionar_Factura extends javax.swing.JFrame {
                 datos[1] = rs.getString(2);
                 datos[2] = rs.getString(3);
                 datos[3] = rs.getString(4);
-                datos[4] = rs.getString(5);
 
                 factura.addRow(datos);
             }
@@ -378,7 +376,6 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         fechaSistema();
         cmbEstado.setSelectedIndex(0);
         cmbProveedor.setSelectedIndex(0);
-        ((JTextField) jdchCaducidad.getDateEditor().getUiComponent()).setText("");
         id = 0;
     }
 
@@ -396,6 +393,7 @@ public class Gestionar_Factura extends javax.swing.JFrame {
                 datos[1] = rs.getString(2);
 
                 cmbProveedor.addItem(datos[0] + " - " + datos[1]);
+                cmbAux.addItem(datos[0]);
             }
             tblFacturas.setModel(factura);
         } catch (SQLException error) {
@@ -413,15 +411,11 @@ public class Gestionar_Factura extends javax.swing.JFrame {
 
     private void btnAgregarFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarFMouseClicked
         if (cmbProveedor.getSelectedIndex() != 0)
-            if (!((JTextField) jdchCaducidad.getDateEditor().getUiComponent()).getText().equals("")) {
                 if (cmbEstado.getSelectedIndex() != 0) {
                     agregarFactura();
                 } else {
                     showMessageDialog(this, "Estado no seleccionado");
                 }
-            } else {
-                showMessageDialog(this, "Fecha de caducidad no establecida");
-            }
         else
             showMessageDialog(this, "Seleccione a un Proveedor");
     }//GEN-LAST:event_btnAgregarFMouseClicked
@@ -438,7 +432,6 @@ public class Gestionar_Factura extends javax.swing.JFrame {
                 }
 
                 limpiarcasillasFactura();
-                jdchCaducidad.setEnabled(true);
             } else {
                 showMessageDialog(this, "Seleccionar una opción valida para el Estado de la factura");
             }
@@ -457,10 +450,8 @@ public class Gestionar_Factura extends javax.swing.JFrame {
         id = Integer.parseInt(tblFacturas.getValueAt(tblFacturas.getSelectedRow(), 0).toString());
 
         txtLlegada.setText(fechaLlegada);
-        ((JTextField) jdchCaducidad.getDateEditor().getUiComponent()).setText(fechaCaducidad);
         cmbEstado.setSelectedItem(Estado);
 
-        jdchCaducidad.setEnabled(false);
     }//GEN-LAST:event_tblFacturasMouseClicked
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
@@ -507,10 +498,10 @@ public class Gestionar_Factura extends javax.swing.JFrame {
     private javax.swing.JLabel Proveedor;
     private javax.swing.JLabel btnAgregarF;
     private javax.swing.JLabel btnModificarF;
+    private javax.swing.JComboBox<String> cmbAux;
     private javax.swing.JComboBox<String> cmbEstado;
     private javax.swing.JComboBox<String> cmbProveedor;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
@@ -524,7 +515,6 @@ public class Gestionar_Factura extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private com.toedter.calendar.JDateChooser jdchCaducidad;
     public javax.swing.JLabel lblNombre;
     private javax.swing.JTable tblFacturas;
     private javax.swing.JTextField txtBuscar;

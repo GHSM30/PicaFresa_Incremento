@@ -126,7 +126,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Existencias", "FechaLlegada", "FechaCaducidad", "Precio", "Proveedor", "Categoria"
+                "Nombre", "Existencias", "FechaLlegada", "FechaCaducidad", "Precio", "Proveedor", "Categoria", "Factura"
             }
         ));
         tablaAlmacen.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -328,20 +328,21 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         String Existencias = txtExistencias.getText();
         String FechaLL = txtFechaLlegada.getText();
         String Precio = txtPrecio.getText();
-        String Tipo = cmbCategoria.getSelectedItem().toString();
+        int Tipo = cmbCategoria.getSelectedIndex();
+        System.out.print(Tipo);
         String FechaCaducidad = txtFechaCaducidad.getText();
         //Si el proveedor se selecciona ocmo Otro entonces se insertan los datos en Almacen
         if (Proveedor!="Otro") {
             try {
                 //Sentencia DML para insertar datos
-                String sql = "INSERT INTO producto (nombre_producto,existencias,fecha_llegada,fecha_caducidad,Precio,fk_idCategoria_Producto,Proveedor_id_proveedor)"
-                    + " VALUES('" + Nombre + "','" + Existencias +"','" + FechaLL+ "','" + FechaCaducidad + "','" + Precio + "','" + 1+ "','" + 1 + "')";
+                String sql = "INSERT INTO almacen (nombre_producto,existencias,fecha_llegada,fecha_caducidad,Precio,Proveedor,categoria_producto_idCategoria_Producto,factura_idFactura)"
+                    + " VALUES('" + Nombre + "','" + Existencias +"','" + FechaLL+ "','" + FechaCaducidad + "','" + Precio + "','" + Proveedor + "','" + Tipo+ "','" + 1 + "')";
            
                 conn = conexion.conectar();                                                                                                 
                 st = conn.createStatement();
                 st.executeUpdate(sql);
                 showMessageDialog(this, "Nuevo producto registrado");
-                InsertarEnAlmacen();
+                //InsertarEnAlmacen();
                 limpiar();
             } catch (Exception error) {
                 System.out.println("Error en Insetar datos" + error);
@@ -401,16 +402,16 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         }
         limpiartTxt();
     }//Insertar datos
-
     public void MostrarBD() {
-        String sql = "SELECT * FROM  producto";
+        String sql = "SELECT * FROM  almacen";
         conn = conexion.conectar();
         System.out.println(sql);
-        String[] datos = new String[7];
+        String[] datos = new String[8];
         try {
             st = conn.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {
+                
                 datos[0] = rs.getString(2);
                 datos[1] = rs.getString(3);
                 datos[2] = rs.getString(4);
@@ -418,7 +419,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
                 datos[4] = rs.getString(6);
                 datos[5] = rs.getString(7);
                 datos[6] = rs.getString(8);
-                
+                datos[7] = rs.getString(9);
 
                 modelo.addRow(datos);
 
@@ -435,15 +436,32 @@ public class Gestionar_Producto extends javax.swing.JFrame {
             String Exi =txtExistencias.getText();
             String Precio =txtPrecio.getText();
             String fecha_cad =txtFechaCaducidad.getText();
+            String Proveedor = cmbProveedor.getSelectedItem().toString();
+            int Tipo = cmbCategoria.getSelectedIndex();
+            String ID = "";      
+            
+                    try {
+                        String sql = "SELECT Id_producto FROM almacen WHERE Nombre_producto='" + Nombre + "'";
+                        conn = conexion.conectar();
+                        st = conn.createStatement();
+                        rs = st.executeQuery(sql);          
+                        while (rs.next()) {
+                            ID = rs.getString(1);
+                            System.out.println(ID);
+                        }
+                        System.out.println("ID encontrado");
+                    } catch (Exception error) {
+                        System.out.println("Producto NO encontrado para su eliminación" + error);
+                    }
             
             try{                    
                 if(Nombre.equals("") || Precio.equals("") || cmbProveedor.getSelectedIndex()==0 || fecha_cad.equals("")) {
                     showMessageDialog(this, "Campos Vacios o No Llenados. Verificar");
                     limpiartTxt();
-                } else {
-                    String sql = "UPDATE producto SET nombre_producto = '" + Nombre + "', existencias = '"  + Exi + "',fecha_llegada = '" + txtFechaLlegada.getText() + "',fecha_caducidad = '" + fecha_cad + "', Precio = '" + Precio 
-                        + "' WHERE nombre_producto = '" + Nombre + "'";
+                } else {            
 
+                    String sql = "UPDATE almacen SET Nombre_producto = '" + Nombre + "', Existencias = '"  + Exi + "',Fecha_llegada = '" + txtFechaLlegada.getText() + "',Fecha_caducidad = '" + fecha_cad + "', Precio = '" + Precio + "', Proveedor = '" + Proveedor + "', categoria_producto_idCategoria_Producto = '" + Tipo + "', factura_idFactura = '" + 1
+                        + "' WHERE Id_Producto = '" + ID + "'";
 
                     conn = conexion.conectar();
                     st = conn.createStatement();
@@ -469,17 +487,17 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         cmbCategoria.setSelectedIndex(0);
         txtFechaCaducidad.setText("");
     }
-    public void sacaridFact(){
-        
-    }
+    
     public void Eliminar() {
         String Nombre = txtNombre.getText();
 
         String ID = "";
+        
         try {
-            String sql = "SELECT id_producto FROM PRODUCTO WHERE nombre_producto='" + Nombre + "'";
+            String sql = "SELECT Id_producto FROM almacen WHERE Nombre_producto='" + Nombre + "'";
+            conn = conexion.conectar();
             st = conn.createStatement();
-            rs = st.executeQuery(sql);
+            rs = st.executeQuery(sql);          
             while (rs.next()) {
                 ID = rs.getString(1);
                 System.out.println(ID);
@@ -496,7 +514,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
                 showMessageDialog(this, "Articulo no seleccionado");
                 limpiartTxt();
             } else {
-                String sql = "DELETE FROM ALMACEN where producto_id_producto = " + ID;
+                String sql = "DELETE FROM almacen WHERE Id_producto = " + ID;//+ "AND Nombre_producto = "+ Nombre;
                 conn = conexion.conectar();
                 st = conn.createStatement();
                 st.executeUpdate(sql);
@@ -505,12 +523,13 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         } catch (Exception error) {
             System.out.println("Error en eliminar" + error);
         }
+        /*
         try {
             if (fila < 0) {
                 showMessageDialog(this, "Articulo no seleccionado");
                 limpiartTxt();
             } else {
-                String sql = "DELETE FROM Producto  where id_producto = " + ID;
+                String sql = "DELETE FROM almacen  where id_producto = " + ID;
                 conn = conexion.conectar();
                 st = conn.createStatement();
                 st.executeUpdate(sql);
@@ -522,6 +541,7 @@ public class Gestionar_Producto extends javax.swing.JFrame {
         } catch (Exception error) {
             System.out.println("Error en eliminar" + error);
         }
+*/
     }
 
     public void filtro(String consulta, JTable Tabla) {
@@ -540,17 +560,19 @@ public class Gestionar_Producto extends javax.swing.JFrame {
             String FechaLLegadaP = (String) tablaAlmacen.getValueAt(fila, 2);
             String Unidades = (String) tablaAlmacen.getValueAt(fila, 3);
             String Precio = (String) tablaAlmacen.getValueAt(fila, 4);
-            String Proveedor = (String) tablaAlmacen.getValueAt(fila, 6);
-            cmbCategoria.setSelectedItem(tablaAlmacen.getValueAt(tablaAlmacen.getSelectedRow(), 5).toString());
+            String Proveedor = (String) tablaAlmacen.getValueAt(fila, 5);
+            String Categoria = (String) tablaAlmacen.getValueAt(fila, 6);
+            cmbCategoria.setSelectedItem(tablaAlmacen.getValueAt(tablaAlmacen.getSelectedRow(), 6).toString());
 
             ren = fila;
             cmbProveedor.setSelectedItem(Proveedor);
+            cmbCategoria.setSelectedItem(Categoria);
             txtNombre.setText("" + Nombre);
             txtExistencias.setText("" + Peso);
             txtFechaLlegada.setText(FechaLLegadaP);
             txtFechaCaducidad.setText("" + Unidades);
             txtPrecio.setText("" + Precio);
-
+            
         }
     }//GEN-LAST:event_tablaAlmacenMouseClicked
     private void llenarCmbProducto() {

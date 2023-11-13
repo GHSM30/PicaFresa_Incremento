@@ -236,8 +236,8 @@ String[] datos = new String[5];
                 st = conn.createStatement();
                 rs = st.executeQuery(sql);
                 while (rs.next()) {
-                    datos[0] = rs.getString(1);
-                    datos[1] = rs.getString(2);
+                    datos[0] = rs.getString(1); //ID usuarios
+                    datos[1] = rs.getString(2); // Usuario
                     datos[2] = rs.getString(4);
                     datos[3] = rs.getString(5);
                     datos[4] = rs.getString(6);
